@@ -12,7 +12,7 @@ import com.bluelinelabs.conductor.Router
 import com.kumela.runn.R
 import com.kumela.runn.di.injectors.Injector
 import com.kumela.runn.di.injectors.ScreenInjector
-import com.kumela.runn.ui.navigation.ScreenNavigator
+import com.kumela.runn.ui.core.navigation.ScreenNavigator
 import java.util.*
 import javax.inject.Inject
 
@@ -60,6 +60,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         if (isFinishing) {
+            screenNavigator.dispose()
             Injector.clear(this)
         }
     }

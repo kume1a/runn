@@ -6,18 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
 import butterknife.ButterKnife
 import butterknife.Unbinder
-import com.bluelinelabs.conductor.Controller
-import com.bluelinelabs.conductor.ControllerChangeHandler
-import com.bluelinelabs.conductor.ControllerChangeType
 import com.kumela.runn.di.injectors.Injector
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
+import com.kumela.runn.ui.core.mvp.MvpBaseController
+import com.kumela.runn.ui.core.mvp.core.MvpPresenter
+import com.kumela.runn.ui.core.mvp.core.MvpView
 
-abstract class BaseController : Controller {
+abstract class BaseController<V: MvpView, P: MvpPresenter<V>> : MvpBaseController<V, P> {
 
-    private val compositeDisposable = CompositeDisposable()
     private var injected = false
     private var unbinder: Unbinder? = null
 
@@ -32,7 +30,7 @@ abstract class BaseController : Controller {
         super.onContextAvailable(context)
     }
 
-    override fun onCreateView(
+    final override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup,
         savedViewState: Bundle?
@@ -40,44 +38,22 @@ abstract class BaseController : Controller {
         val view =  inflater.inflate(layoutRes, container, false)
         unbinder = ButterKnife.bind(this, view)
         onViewBound(view)
-        compositeDisposable.addAll(*disposables())
+        presenter.onViewBound()
         return view
     }
 
-    protected fun onViewBound(view: View) {}
-
-    protected fun disposables(): Array<Disposable> = emptyArray()
-
     @get:LayoutRes
-    protected abstract val layoutRes: Int
+    abstract val layoutRes: Int
 
-    override fun onChangeStarted(
-        changeHandler: ControllerChangeHandler,
-        changeType: ControllerChangeType
-    ) {
-        super.onChangeStarted(changeHandler, changeType)
-//        for (task in screenLifecycleTasks) {
-//            if (changeType.isEnter) {
-//                task.onEnterScope(view)
-//            } else {
-//                task.onExitScope(view)
-//            }
-//        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-//        for (task in screenLifecycleTasks) {
-//            task.onDestroy(view)
-//        }
-    }
+    protected open fun onViewBound(view: View) {}
 
     override fun onDestroyView(view: View) {
         super.onDestroyView(view)
-        compositeDisposable.clear()
         if (unbinder != null) {
             unbinder!!.unbind()
             unbinder = null
         }
     }
+
+    fun getString(@StringRes stringRes: Int): String? = view?.context?.getString(stringRes)
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="GenderChooser" >
+        <attr name="icon_male" format="reference" />
+        <attr name="icon_female" format="reference" />
+        <attr name="color_icon" format="color" />
+        <attr name="color_background" format="color" />
+        <attr name="color_foreground" format="color" />
+        <attr name="size_icon" format="dimension" />
+        <attr name="animation_duration" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="OnboardingIndicator">
+        <attr name="colorActive" format="color" />
+        <attr name="colorInactive" format="color" />
+        <attr name="indicatorCount" format="integer" />
+    </declare-styleable>
+
+    <attr name="GenderChooser" format="reference" />
+    <attr name="OnboardingIndicator" format="reference" />
+</resources>

@@ -28,9 +28,11 @@ public class ActivityInjector {
         this.activityInjectors = activityInjectors;
     }
 
-    @SuppressWarnings({"unchecked"})
-    public void inject(@NonNull Activity activity) {
-        checkActivityType(activity);
+    @SuppressWarnings({"unchecked", "ConstantConditions"})
+    void inject(@NonNull Activity activity) {
+        if (!(activity instanceof BaseActivity)) {
+            throw new IllegalArgumentException("activity must extend " + BaseActivity.class.getSimpleName());
+        }
 
         String instanceId = ((BaseActivity) activity).getInstanceId();
         if (cache.containsKey(instanceId)) {
@@ -46,19 +48,17 @@ public class ActivityInjector {
         injector.inject(activity);
     }
 
-    public void clear(@NonNull Activity activity) {
-        checkActivityType(activity);
-        cache.remove(((BaseActivity) activity).getInstanceId());
-    }
-
-    private void checkActivityType(@NonNull Activity activity) {
+    void clear(@NonNull Activity activity) {
         if (!(activity instanceof BaseActivity)) {
             throw new IllegalArgumentException("activity must extend " + BaseActivity.class.getSimpleName());
         }
+
+        cache.remove(((BaseActivity) activity).getInstanceId());
     }
 
+    @NonNull
     static ActivityInjector get(@NotNull Context context) {
-        return ((BaseApplication) context.getApplicationContext()).activityInjector;
+        return ((BaseApplication) context.getApplicationContext()).getActivityInjector();
     }
 
 }

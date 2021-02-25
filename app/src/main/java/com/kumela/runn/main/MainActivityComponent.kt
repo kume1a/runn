@@ -2,7 +2,7 @@ package com.kumela.runn.main
 
 import com.kumela.runn.di.annotations.ActivityScope
 import com.kumela.runn.di.common.MainScreenBindingModule
-import com.kumela.runn.ui.navigation.NavigationModule
+import com.kumela.runn.ui.core.navigation.NavigationModule
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
 

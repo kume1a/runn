@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Runn</string>
+
+    <string name="onboarding_gender_header">What\'s your gender?</string>
+    <string name="onboarding_gender_comment"><![CDATA[For calorie & stride calculation]]></string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="finish">Finish</string>
+    <string name="onboarding_weight_header">How much do you weigh?</string>
+    <string name="onboarding_height_header">How tall are you?</string>
+    <string name="kg">kg</string>
+    <string name="cm">cm</string>
 </resources>
