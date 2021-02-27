@@ -2,6 +2,8 @@ package com.kumela.runn.di.common;
 
 import com.bluelinelabs.conductor.Controller;
 import com.kumela.runn.di.annotations.ControllerKey;
+import com.kumela.runn.ui.home.HomeController;
+import com.kumela.runn.ui.home.HomeScreenComponent;
 import com.kumela.runn.ui.onboarding.OnboardingController;
 import com.kumela.runn.ui.onboarding.OnboardingScreenComponent;
 import com.kumela.runn.ui.splash.SplashController;
@@ -15,6 +17,7 @@ import dagger.multibindings.IntoMap;
 @Module(subcomponents = {
         SplashScreenComponent.class,
         OnboardingScreenComponent.class,
+        HomeScreenComponent.class,
 })
 public abstract class MainScreenBindingModule {
 
@@ -27,4 +30,9 @@ public abstract class MainScreenBindingModule {
     @IntoMap
     @ControllerKey(OnboardingController.class)
     abstract AndroidInjector.Factory<? extends Controller> bindOnboardingScreenInjector(OnboardingScreenComponent.Builder builder);
+
+    @Binds
+    @IntoMap
+    @ControllerKey(HomeController.class)
+    abstract AndroidInjector.Factory<? extends Controller> bindHomeScreenInjector(HomeScreenComponent.Builder builder);
 }

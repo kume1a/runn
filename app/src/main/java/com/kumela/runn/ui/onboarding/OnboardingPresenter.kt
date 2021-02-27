@@ -1,15 +1,16 @@
 package com.kumela.runn.ui.onboarding
 
-import android.util.Log
 import com.kumela.runn.core.Constants
 import com.kumela.runn.core.enums.Gender
-import com.kumela.runn.di.annotations.ScreenScope
+import com.kumela.runn.data.db.user.User
 import com.kumela.runn.ui.core.mvp.SavedStatePresenter
-import javax.inject.Inject
+import com.kumela.runn.ui.core.navigation.ScreenNavigator
+import timber.log.Timber
 
-@ScreenScope
-class OnboardingPresenter @Inject constructor() :
-    SavedStatePresenter<OnboardingContract.View, OnboardingPresenter.SavedState>(SavedState()),
+class OnboardingPresenter(
+    private val model: OnboardingContract.Model,
+    private val screenNavigator: ScreenNavigator,
+) : SavedStatePresenter<OnboardingContract.View, OnboardingPresenter.SavedState>(SavedState()),
     OnboardingContract.Presenter {
 
     data class SavedState(
@@ -50,8 +51,18 @@ class OnboardingPresenter @Inject constructor() :
                 val weight = view.weight
                 val height = view.height
 
-                Log.d(javaClass.simpleName,
-                    "onNextClicked: gender = $gender, weight = $weight, height = $height")
+                val user = User(gender, weight, height)
+                model.createUser(user)
+                    .subscribe(
+                        {
+                            view.hideProgressIndication()
+                            Timber.d("created new user $user")
+                            screenNavigator.toHome()
+                        },
+                        { throwable ->
+                            view.hideProgressIndication()
+                            Timber.e(throwable)
+                        })
             }
             return
         }

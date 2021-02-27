@@ -15,7 +15,7 @@ interface MvpPresenter<V: MvpView> {
 
     /**
      * Will be called if the view has been detached from the Presenter.
-     * Usually this happens on screen orientation changes or view (like fragment) has been put on the backstack.
+     * Usually this happens on screen orientation changes or view (like fragment) has been put on the back stack.
      */
     @UiThread
     fun detachView()

@@ -1,4 +1,4 @@
-package com.kumela.runn.main
+package com.kumela.runn.core.main
 
 import com.bluelinelabs.conductor.Controller
 import com.kumela.runn.R

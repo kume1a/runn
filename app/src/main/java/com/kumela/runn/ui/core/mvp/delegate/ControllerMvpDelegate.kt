@@ -2,10 +2,7 @@ package com.kumela.runn.ui.core.mvp.delegate
 
 import android.app.Activity
 import android.content.Context
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.kumela.runn.ui.core.mvp.core.MvpPresenter
 import com.kumela.runn.ui.core.mvp.core.MvpView
 

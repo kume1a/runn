@@ -1,4 +1,4 @@
-package com.kumela.runn.main
+package com.kumela.runn.core.main
 
 import com.kumela.runn.di.annotations.ActivityScope
 import com.kumela.runn.di.common.MainScreenBindingModule

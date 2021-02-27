@@ -4,6 +4,8 @@ import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
+import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
+import com.kumela.runn.ui.home.HomeController
 import com.kumela.runn.ui.onboarding.OnboardingController
 import javax.inject.Inject
 
@@ -30,6 +32,13 @@ class DefaultScreenNavigator @Inject constructor() : ScreenNavigator {
         router?.replaceTopController(
             RouterTransaction.with(OnboardingController.newInstance())
                 .pushChangeHandler(FadeChangeHandler())
+        )
+    }
+
+    override fun toHome() {
+        router?.replaceTopController(
+            RouterTransaction.with(HomeController.newInstance())
+                .pushChangeHandler(HorizontalChangeHandler())
         )
     }
 }

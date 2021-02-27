@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.view.View
 import android.widget.Button
 import android.widget.NumberPicker
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.Guideline
 import androidx.core.animation.doOnEnd
@@ -43,6 +44,9 @@ class OnboardingController :
     @BindView(R.id.guideline_next_back) lateinit var guidelineNextBack: Guideline
     @BindView(R.id.button_next) lateinit var buttonNext: Button
     @BindView(R.id.button_back) lateinit var buttonBack: Button
+
+    @BindView(R.id.progress_indicator) lateinit var progressIndicator: ProgressBar
+    @BindView(R.id.view_indicator_background) lateinit var viewIndicatorBackground: View
 
     override fun onViewBound(view: View) {
         super.onViewBound(view)
@@ -159,6 +163,16 @@ class OnboardingController :
 
     override fun changeFinishButtonToNext() {
         buttonNext.post { buttonNext.text = getString(R.string.next) }
+    }
+
+    override fun showProgressIndication() {
+        viewIndicatorBackground.visibility = View.VISIBLE
+        progressIndicator.visibility = View.VISIBLE
+    }
+
+    override fun hideProgressIndication() {
+        viewIndicatorBackground.visibility = View.GONE
+        progressIndicator.visibility = View.GONE
     }
 
     private fun animateRight(view: View, show: Boolean) {

@@ -2,7 +2,8 @@ package com.kumela.runn.ui.core.mvp
 
 import com.kumela.runn.ui.core.mvp.core.MvpView
 
-abstract class SavedStatePresenter<V : MvpView, S>(initialState: S) : MvpBasePresenter<V>() {
+abstract class SavedStatePresenter<V : MvpView, S>(initialState: S) :
+    MvpBasePresenter<V>() {
 
     private var state: S = initialState
 

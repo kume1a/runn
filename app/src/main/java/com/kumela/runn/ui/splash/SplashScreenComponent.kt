@@ -5,11 +5,11 @@ import dagger.Subcomponent
 import dagger.android.AndroidInjector
 
 @ScreenScope
-@Subcomponent
-interface SplashScreenComponent: AndroidInjector<SplashController> {
+@Subcomponent(modules = [SplashModule::class])
+interface SplashScreenComponent : AndroidInjector<SplashController> {
 
     @Subcomponent.Builder
-    abstract class Builder: AndroidInjector.Builder<SplashController>() {
+    abstract class Builder : AndroidInjector.Builder<SplashController>() {
         override fun seedInstance(instance: SplashController?) {}
     }
 }

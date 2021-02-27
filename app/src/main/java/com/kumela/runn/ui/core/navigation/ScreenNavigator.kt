@@ -11,4 +11,6 @@ interface ScreenNavigator {
     fun dispose()
 
     fun toOnboarding()
+
+    fun toHome()
 }

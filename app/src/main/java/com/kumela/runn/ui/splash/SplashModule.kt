@@ -1,4 +1,5 @@
-package com.kumela.runn.ui.onboarding
+package com.kumela.runn.ui.splash
+
 import com.kumela.runn.data.db.user.UserService
 import com.kumela.runn.di.annotations.ScreenScope
 import com.kumela.runn.ui.core.navigation.ScreenNavigator
@@ -6,19 +7,20 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-object OnboardingModule {
+object SplashModule {
 
     @JvmStatic
     @Provides
     @ScreenScope
-    fun provideOnboardingPresenter(
-        model: OnboardingContract.Model,
+    fun providePresenter(
         screenNavigator: ScreenNavigator,
-    ): OnboardingContract.Presenter = OnboardingPresenter(model, screenNavigator)
+        model: SplashContract.Model,
+    ): SplashContract.Presenter = SplashPresenter(screenNavigator, model)
 
     @JvmStatic
     @Provides
     @ScreenScope
-    fun provideOnboardingModel(userService: UserService): OnboardingContract.Model =
-        OnboardingModel(userService)
+    fun provideSplashModel(
+        userService: UserService,
+    ): SplashContract.Model = SplashModel(userService)
 }

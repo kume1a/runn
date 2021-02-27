@@ -2,8 +2,8 @@ package com.kumela.runn.di.common;
 
 import android.app.Activity;
 
-import com.kumela.runn.main.MainActivity;
-import com.kumela.runn.main.MainActivityComponent;
+import com.kumela.runn.core.main.MainActivity;
+import com.kumela.runn.core.main.MainActivityComponent;
 
 import dagger.Binds;
 import dagger.Module;

@@ -1,8 +1,11 @@
 package com.kumela.runn.ui.onboarding
 
 import com.kumela.runn.core.enums.Gender
+import com.kumela.runn.data.db.user.User
+import com.kumela.runn.ui.core.mvp.MvpModel
 import com.kumela.runn.ui.core.mvp.core.MvpPresenter
 import com.kumela.runn.ui.core.mvp.core.MvpView
+import io.reactivex.rxjava3.core.Completable
 
 interface OnboardingContract {
 
@@ -24,10 +27,17 @@ interface OnboardingContract {
         fun showBackButton()
         fun changeNextButtonToFinish()
         fun changeFinishButtonToNext()
+
+        fun showProgressIndication()
+        fun hideProgressIndication()
     }
 
     interface Presenter: MvpPresenter<View> {
         fun onBackClicked()
         fun onNextClicked()
+    }
+
+    interface Model: MvpModel {
+        fun createUser(user: User): Completable
     }
 }
