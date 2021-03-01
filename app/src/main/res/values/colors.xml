@@ -13,6 +13,6 @@
     <color name="secondary_surface_variant">#343438</color>
 
     <color name="primary">#296BD7</color>
-    <color name="accent">#61F4F6</color>
+    <color name="accent">#18ffff</color>
     <color name="overlay">#40000000</color>
 </resources>

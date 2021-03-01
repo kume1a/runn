@@ -38,7 +38,7 @@ class DefaultScreenNavigator @Inject constructor() : ScreenNavigator {
     override fun toHome() {
         router?.replaceTopController(
             RouterTransaction.with(HomeController.newInstance())
-                .pushChangeHandler(HorizontalChangeHandler())
+                .pushChangeHandler(FadeChangeHandler())
         )
     }
 }

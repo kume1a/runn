@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import butterknife.ButterKnife
+import butterknife.Unbinder
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.ControllerChangeHandler
@@ -17,11 +19,12 @@ import java.util.*
 import javax.inject.Inject
 
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity: AppCompatActivity() {
 
     lateinit var instanceId: String
 
     private lateinit var router: Router
+    private var unbinder: Unbinder? = null
 
     @Inject lateinit var screenInjector: ScreenInjector
     @Inject lateinit var screenNavigator: ScreenNavigator
@@ -35,6 +38,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
         Injector.inject(this)
         setContentView(layoutRes)
+        unbinder = ButterKnife.bind(this)
 
         val screenContainer = findViewById<FrameLayout>(R.id.screen_container)
             ?: throw NullPointerException("activity must have a view with id: screen_container")
@@ -63,12 +67,24 @@ abstract class BaseActivity : AppCompatActivity() {
             screenNavigator.dispose()
             Injector.clear(this)
         }
+        if (unbinder != null) {
+            unbinder!!.unbind()
+            unbinder = null
+        }
     }
 
     @get:LayoutRes
     protected abstract val layoutRes: Int
 
     protected abstract val initialScreen: Controller
+
+    protected open fun onScreenChangeStarted(
+        to: Controller?,
+        from: Controller?,
+        isPush: Boolean,
+        container: ViewGroup,
+        handler: ControllerChangeHandler,
+    ) {}
 
     private fun monitorBackStack() {
         router.addChangeListener(object : ControllerChangeHandler.ControllerChangeListener {
@@ -77,15 +93,17 @@ abstract class BaseActivity : AppCompatActivity() {
                 from: Controller?,
                 isPush: Boolean,
                 container: ViewGroup,
-                handler: ControllerChangeHandler
-            ) {}
+                handler: ControllerChangeHandler,
+            ) {
+                onScreenChangeStarted(to, from, isPush, container, handler)
+            }
 
             override fun onChangeCompleted(
                 to: Controller?,
                 from: Controller?,
                 isPush: Boolean,
                 container: ViewGroup,
-                handler: ControllerChangeHandler
+                handler: ControllerChangeHandler,
             ) {
                 if (!isPush && from != null) {
                     Injector.clear(from)

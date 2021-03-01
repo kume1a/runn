@@ -16,8 +16,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.kumela.runn.R
 import com.kumela.runn.core.enums.Gender
+import com.kumela.runn.ui.core.views.core.ViewUtils
 import kotlin.math.abs
-import kotlin.math.min
 import kotlin.math.roundToInt
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -158,28 +158,13 @@ class GenderChooser @JvmOverloads constructor(
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
-        val widthMode = MeasureSpec.getMode(widthMeasureSpec)
-        val widthSize = MeasureSpec.getSize(widthMeasureSpec)
-        val heightMode = MeasureSpec.getMode(heightMeasureSpec)
-        val heightSize = MeasureSpec.getSize(heightMeasureSpec)
-
-        val desiredWidth: Int = DEFAULT_WIDTH.dpToPx().toInt()
-        val desiredHeight: Int = DEFAULT_HEIGHT.dpToPx().toInt()
-
-        //Measure Width
-        val width: Int = when (widthMode) {
-            MeasureSpec.EXACTLY -> widthSize
-            MeasureSpec.AT_MOST -> min(desiredWidth, widthSize)
-            else -> desiredWidth
-        }
-
-        //Measure Height
-        val height: Int = when (heightMode) {
-            MeasureSpec.EXACTLY -> heightSize
-            MeasureSpec.AT_MOST -> min(desiredHeight, heightSize)
-            else -> desiredHeight
-        }
-        setMeasuredDimension(width, height)
+        val size = ViewUtils.measure(
+            widthMeasureSpec,
+            heightMeasureSpec,
+            DEFAULT_WIDTH.dpToPx().toInt(),
+            DEFAULT_HEIGHT.dpToPx().toInt()
+        )
+        setMeasuredDimension(size.width, size.height)
     }
 
     override fun onDraw(canvas: Canvas?) {

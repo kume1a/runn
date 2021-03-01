@@ -8,7 +8,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.ColorInt
 import com.kumela.runn.R
-import kotlin.math.min
+import com.kumela.runn.ui.core.views.core.ViewUtils
 import kotlin.math.roundToInt
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -107,28 +107,14 @@ class OnboardingIndicator @JvmOverloads constructor(
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
-        val widthMode = MeasureSpec.getMode(widthMeasureSpec)
-        val widthSize = MeasureSpec.getSize(widthMeasureSpec)
-        val heightMode = MeasureSpec.getMode(heightMeasureSpec)
-        val heightSize = MeasureSpec.getSize(heightMeasureSpec)
+        val size = ViewUtils.measure(
+            widthMeasureSpec,
+            heightMeasureSpec,
+            DEFAULT_WIDTH.dpToPx().toInt(),
+            DEFAULT_HEIGHT.dpToPx().toInt()
+        )
 
-        val desiredWidth: Int = DEFAULT_WIDTH.dpToPx().toInt()
-        val desiredHeight: Int = DEFAULT_HEIGHT.dpToPx().toInt()
-
-        //Measure Width
-        val width: Int = when (widthMode) {
-            MeasureSpec.EXACTLY -> widthSize
-            MeasureSpec.AT_MOST -> min(desiredWidth, widthSize)
-            else -> desiredWidth
-        }
-
-        //Measure Height
-        val height: Int = when (heightMode) {
-            MeasureSpec.EXACTLY -> heightSize
-            MeasureSpec.AT_MOST -> min(desiredHeight, heightSize)
-            else -> desiredHeight
-        }
-        setMeasuredDimension(width, height)
+        setMeasuredDimension(size.width, size.height)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {

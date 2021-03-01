@@ -1,6 +1,5 @@
 package com.kumela.runn.ui.core.mvp.delegate
 
-import android.app.Activity
 import android.content.Context
 import android.view.View
 import com.kumela.runn.ui.core.mvp.MvpBaseController
@@ -29,21 +28,7 @@ class ControllerMvpDelegateImpl<V : MvpView, P : MvpPresenter<V>>(
         }
     }
 
-    override fun onActivityResumed(activity: Activity) {}
-
-    override fun onActivityStarted(activity: Activity) {}
-
-    override fun onActivityPaused(activity: Activity) {}
-
-    override fun onActivityStopped(activity: Activity) {}
-
-    override fun onAttach(view: View) {}
-
-    override fun onDetach(view: View) {}
-
     override fun onDestroyView(view: View) {
         presenter.detachView()
     }
-
-    override fun onDestroy() {}
 }

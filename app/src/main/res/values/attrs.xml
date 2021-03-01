@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="GenderChooser" >
+    <attr name="backgroundColor" format="color" />
+    <attr name="iconSize" format="dimension" />
+
+    <declare-styleable name="GenderChooser">
         <attr name="icon_male" format="reference" />
         <attr name="icon_female" format="reference" />
         <attr name="color_icon" format="color" />
@@ -16,6 +19,31 @@
         <attr name="indicatorCount" format="integer" />
     </declare-styleable>
 
+    <declare-styleable name="BottomNav">
+        <attr name="menu" format="reference" />
+        <attr name="backgroundColor"/>
+        <attr name="sideMargins" format="dimension" />
+        <attr name="itemPadding" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="itemFontFamily" format="reference" />
+        <attr name="textSize" format="dimension" />
+        <attr name="iconSize"  />
+        <attr name="iconMargin" format="dimension" />
+        <attr name="iconTintInactive" format="color" />
+        <attr name="iconTintActive" format="color" />
+        <attr name="activeItem" format="integer" />
+        <attr name="centerFabSize" format="dimension" />
+        <attr name="centerFabMargin" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="DiamondFab">
+        <attr name="backgroundColor"/>
+        <attr name="icon" format="reference" />
+        <attr name="iconSize" />
+    </declare-styleable>
+
     <attr name="GenderChooser" format="reference" />
     <attr name="OnboardingIndicator" format="reference" />
+    <attr name="BottomNav" format="reference" />
+    <attr name="DiamondFab" format="reference" />
 </resources>

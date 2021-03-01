@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Runn</string>
 
+    <string name="ellipsis">&#8230;</string>
+
     <string name="onboarding_gender_header">What\'s your gender?</string>
     <string name="onboarding_gender_comment"><![CDATA[For calorie & stride calculation]]></string>
     <string name="next">Next</string>

@@ -1,7 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.bluelinelabs.conductor.ChangeHandlerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/screen_container"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".core.main.MainActivity" />
+    android:background="@color/primary_surface">
+
+    <com.bluelinelabs.conductor.ChangeHandlerFrameLayout
+        android:id="@+id/screen_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".core.main.MainActivity" />
+
+    <com.kumela.runn.ui.core.views.BottomNav
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+        android:translationY="54dp"
+        android:visibility="gone"
+        app:backgroundColor="@color/secondary_surface_variant"
+        app:iconTintActive="@color/accent"
+        app:iconTintInactive="@color/icon_secondary"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+        app:menu="@menu/bottom_nav"
+        app:textColor="@color/accent"
+        tools:translationY="0dp"
+        tools:visibility="visible" />
+
+    <com.kumela.runn.ui.core.views.DiamondFab
+        android:id="@+id/diamond_fab"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="24dp"
+        android:scaleX="0"
+        android:scaleY="0"
+        android:visibility="gone"
+        app:backgroundColor="@color/accent"
+        app:icon="@drawable/ic_icon_darker"
+        app:iconSize="36dp"
+        app:layout_behavior=".ui.core.behaviors.ScaleViewBehavior"
+        tools:scaleX="0"
+        tools:scaleY="0"
+        tools:visibility="visible" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
