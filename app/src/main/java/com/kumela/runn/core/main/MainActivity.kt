@@ -3,6 +3,7 @@ package com.kumela.runn.core.main
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -29,6 +30,12 @@ class MainActivity : BaseActivity() {
 
     private val interpolator = AccelerateDecelerateInterpolator()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        handleBottomNavigation(router.backstack.first().controller)
+    }
+
     override fun onScreenChangeStarted(
         to: Controller?,
         from: Controller?,
@@ -36,7 +43,11 @@ class MainActivity : BaseActivity() {
         container: ViewGroup,
         handler: ControllerChangeHandler,
     ) {
-        when (to) {
+       handleBottomNavigation(to)
+    }
+
+    private fun handleBottomNavigation(controller: Controller?) {
+        when (controller) {
             is HomeController -> showBottomNavigation()
             else -> hideBottomNavigation()
         }

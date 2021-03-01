@@ -23,7 +23,7 @@ abstract class BaseActivity: AppCompatActivity() {
 
     lateinit var instanceId: String
 
-    private lateinit var router: Router
+    protected lateinit var router: Router
     private var unbinder: Unbinder? = null
 
     @Inject lateinit var screenInjector: ScreenInjector
