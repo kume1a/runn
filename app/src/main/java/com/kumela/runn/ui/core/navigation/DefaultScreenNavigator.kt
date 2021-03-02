@@ -4,14 +4,18 @@ import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
-import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
 import com.kumela.runn.ui.home.HomeController
 import com.kumela.runn.ui.onboarding.OnboardingController
+import com.kumela.runn.ui.plans.PlansController
+import com.kumela.runn.ui.profile.ProfileController
+import com.kumela.runn.ui.run.RunController
+import com.kumela.runn.ui.statistics.StatisticsController
 import javax.inject.Inject
 
 class DefaultScreenNavigator @Inject constructor() : ScreenNavigator {
 
     private var router: Router? = null
+    private val fadeChangeHandler = FadeChangeHandler()
 
     override fun pop(): Boolean {
         return router != null && router!!.handleBack()
@@ -31,14 +35,47 @@ class DefaultScreenNavigator @Inject constructor() : ScreenNavigator {
     override fun toOnboarding() {
         router?.replaceTopController(
             RouterTransaction.with(OnboardingController.newInstance())
-                .pushChangeHandler(FadeChangeHandler())
+                .pushChangeHandler(fadeChangeHandler)
         )
     }
 
     override fun toHome() {
         router?.replaceTopController(
             RouterTransaction.with(HomeController.newInstance())
-                .pushChangeHandler(FadeChangeHandler())
+                .pushChangeHandler(fadeChangeHandler)
+                .popChangeHandler(fadeChangeHandler)
+        )
+    }
+
+    override fun toPlans() {
+        router?.replaceTopController(
+            RouterTransaction.with(PlansController.newInstance())
+                .pushChangeHandler(fadeChangeHandler)
+                .popChangeHandler(fadeChangeHandler)
+        )
+    }
+
+    override fun toStatistics() {
+        router?.replaceTopController(
+            RouterTransaction.with(StatisticsController.newInstance())
+                .pushChangeHandler(fadeChangeHandler)
+                .popChangeHandler(fadeChangeHandler)
+        )
+    }
+
+    override fun toProfile() {
+        router?.replaceTopController(
+            RouterTransaction.with(ProfileController.newInstance())
+                .pushChangeHandler(fadeChangeHandler)
+                .popChangeHandler(fadeChangeHandler)
+        )
+    }
+
+    override fun toRun() {
+        router?.pushController(
+            RouterTransaction.with(RunController.newInstance())
+                .pushChangeHandler(fadeChangeHandler)
+                .popChangeHandler(fadeChangeHandler)
         )
     }
 }

@@ -13,4 +13,12 @@ interface ScreenNavigator {
     fun toOnboarding()
 
     fun toHome()
+
+    fun toPlans()
+
+    fun toStatistics()
+
+    fun toProfile()
+
+    fun toRun()
 }

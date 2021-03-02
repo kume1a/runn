@@ -39,7 +39,7 @@ class BottomNav @JvmOverloads constructor(
     )
 
     fun interface OnItemSelectedListener {
-        fun onItemSelected(pos: Int): Boolean
+        fun onItemSelected(pos: Int)
     }
 
     // Dynamic Variables

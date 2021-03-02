@@ -15,7 +15,11 @@ import com.kumela.runn.core.base.BaseActivity
 import com.kumela.runn.ui.core.views.BottomNav
 import com.kumela.runn.ui.core.views.DiamondFab
 import com.kumela.runn.ui.home.HomeController
+import com.kumela.runn.ui.plans.PlansController
+import com.kumela.runn.ui.profile.ProfileController
 import com.kumela.runn.ui.splash.SplashController
+import com.kumela.runn.ui.statistics.StatisticsController
+import timber.log.Timber
 
 @SuppressLint("NonConstantResourceId")
 class MainActivity : BaseActivity() {
@@ -34,6 +38,16 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         handleBottomNavigation(router.backstack.first().controller)
+
+        diamondFab.setOnClickListener { screenNavigator.toRun() }
+        bottomNav.onItemSelectedListener = BottomNav.OnItemSelectedListener { index ->
+            when (index) {
+                0 -> screenNavigator.toHome()
+                1 -> screenNavigator.toPlans()
+                2 -> screenNavigator.toStatistics()
+                3 -> screenNavigator.toProfile()
+            }
+        }
     }
 
     override fun onScreenChangeStarted(
@@ -43,27 +57,31 @@ class MainActivity : BaseActivity() {
         container: ViewGroup,
         handler: ControllerChangeHandler,
     ) {
-       handleBottomNavigation(to)
+        handleBottomNavigation(to)
     }
 
     private fun handleBottomNavigation(controller: Controller?) {
         when (controller) {
-            is HomeController -> showBottomNavigation()
+            is HomeController, is PlansController, is StatisticsController, is ProfileController -> showBottomNavigation()
             else -> hideBottomNavigation()
         }
     }
 
     private fun showBottomNavigation() {
+        Timber.d("showBottomNavigation() called")
+
         bottomNav.visibility = View.VISIBLE
         diamondFab.visibility = View.VISIBLE
 
-        translateViewTo(bottomNav, bottomNav.height.toFloat(), ENTER_ANIMATION_DURATION)
+        translateViewTo(bottomNav, 0f, ENTER_ANIMATION_DURATION)
         scaleViewTo(diamondFab, 1f, ENTER_ANIMATION_DURATION)
     }
 
     private fun hideBottomNavigation() {
+        Timber.d("hideBottomNavigation() called")
+
         scaleViewTo(diamondFab, 0f, EXIT_ANIMATION_DURATION) { diamondFab.visibility = View.GONE }
-        translateViewTo(bottomNav, 0f, EXIT_ANIMATION_DURATION) { bottomNav.visibility = View.GONE }
+        translateViewTo(bottomNav, bottomNav.height.toFloat(), EXIT_ANIMATION_DURATION) { bottomNav.visibility = View.GONE }
     }
 
     private fun translateViewTo(
