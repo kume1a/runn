@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:title="Home"
+        android:title="@string/home"
         android:icon="@drawable/ic_home" />
 
     <item
-        android:title="Plans"
+        android:title="@string/plans"
         android:icon="@drawable/ic_whistle" />
 
     <item
-        android:title="Statistics"
+        android:title="@string/statistics"
         android:icon="@drawable/ic_statistics" />
 
     <item
-        android:title="Profile"
+        android:title="@string/profile"
         android:icon="@drawable/ic_user" />
 </menu>

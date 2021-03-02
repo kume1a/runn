@@ -3,6 +3,16 @@
 
     <string name="ellipsis">&#8230;</string>
 
+    <string name="km">km</string>
+    <string name="km_h">km/h</string>
+    <string name="kg">kg</string>
+    <string name="cm">cm</string>
+
+    <string name="home">Home</string>
+    <string name="plans">Plans</string>
+    <string name="statistics">Statistics</string>
+    <string name="profile">Profile</string>
+
     <string name="onboarding_gender_header">What\'s your gender?</string>
     <string name="onboarding_gender_comment"><![CDATA[For calorie & stride calculation]]></string>
     <string name="next">Next</string>
@@ -12,6 +22,12 @@
     <string name="finish">Finish</string>
     <string name="onboarding_weight_header">How much do you weigh?</string>
     <string name="onboarding_height_header">How tall are you?</string>
-    <string name="kg">kg</string>
-    <string name="cm">cm</string>
+
+    <string name="target">Target</string>
+    <string name="steps_capitalized">Steps</string>
+    <string name="calories">Calories</string>
+    <string name="water">Water</string>
+    <string name="steps">steps</string>
+    <string name="today">Today</string>
+    <string name="recent_activities">Recent Activities</string>
 </resources>

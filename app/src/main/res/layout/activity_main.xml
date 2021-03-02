@@ -41,8 +41,8 @@
         app:icon="@drawable/ic_icon_darker"
         app:iconSize="36dp"
         app:layout_behavior=".ui.core.behaviors.ScaleViewBehavior"
-        tools:scaleX="0"
-        tools:scaleY="0"
+        tools:scaleX="1"
+        tools:scaleY="1"
         tools:visibility="visible" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

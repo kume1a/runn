@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    tools:ignore="ContentDescription"
+    app:cardBackgroundColor="@color/secondary_surface_variant"
+    app:cardCornerRadius="12dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="24dp">
+
+        <TextView
+            android:id="@+id/text_plan_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Plan name" />
+
+        <TextView
+            android:id="@+id/text_run_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_plan_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Today" />
+
+        <TextView
+            android:id="@+id/text_distance_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="32sp"
+            app:layout_constraintStart_toStartOf="@id/text_plan_name"
+            app:layout_constraintTop_toBottomOf="@id/text_plan_name"
+            tools:text="4,2" />
+
+        <TextView
+            android:id="@+id/text_km"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/km"
+            android:textColor="@color/text_secondary"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_distance_amount"
+            app:layout_constraintStart_toEndOf="@id/text_distance_amount" />
+
+        <TextView
+            android:id="@+id/text_speed_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toStartOf="@id/text_kmh"
+            app:layout_constraintTop_toBottomOf="@id/text_run_date"
+            tools:text="8,2" />
+
+        <TextView
+            android:id="@+id/text_kmh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/km_h"
+            android:textColor="@color/text_secondary"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_speed_amount"
+            app:layout_constraintEnd_toEndOf="@id/text_run_date" />
+
+        <TextView
+            android:id="@+id/text_calories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="18dp"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintEnd_toStartOf="@id/text_distance_in_metres"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_distance_amount"
+            tools:text="300 cal" />
+
+        <TextView
+            android:id="@+id/text_distance_in_metres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@id/text_time_amount"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_calories"
+            app:layout_constraintStart_toEndOf="@id/text_calories"
+            tools:text="4256 m" />
+
+        <TextView
+            android:id="@+id/text_time_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintStart_toEndOf="@id/text_distance_in_metres"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_distance_in_metres"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textStyle="bold"
+            tools:text="00:22:32" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="140dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_calories"
+            android:layout_marginTop="32dp"
+            android:background="@color/primary" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
