@@ -7,20 +7,21 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
-import android.view.View
 import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
 import androidx.core.content.res.getDrawableOrThrow
 import com.kumela.runn.R
-import com.kumela.runn.ui.core.views.core.ViewUtils
-import kotlin.math.roundToInt
+import com.kumela.runn.ui.core.views.core.BaseView
 
 @Suppress("MemberVisibilityCanBePrivate")
 class DiamondFab @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = R.attr.DiamondFab,
-) : View(context, attrs, defStyleAttr) {
+) : BaseView(context, attrs, defStyleAttr) {
+
+    override val defaultWidth: Int = DEFAULT_SIZE
+    override val defaultHeight: Int = DEFAULT_SIZE
 
     // Attribute Defaults
     @Dimension private var _iconSize = DEFAULT_ICON_SIZE.dpToPx()
@@ -73,19 +74,6 @@ class DiamondFab @JvmOverloads constructor(
         }
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-
-        val size = ViewUtils.measure(
-            widthMeasureSpec,
-            heightMeasureSpec,
-            DEFAULT_SIZE.dpToPx().toInt(),
-            DEFAULT_SIZE.dpToPx().toInt()
-        )
-
-        setMeasuredDimension(size.width, size.height)
-    }
-
     private fun recalculateBackgroundPath() {
         pathBackground.reset()
 
@@ -118,11 +106,10 @@ class DiamondFab @JvmOverloads constructor(
         icon!!.draw(canvas)
     }
 
-    private fun Float.dpToPx(): Float =
-        (this * resources.displayMetrics.density).roundToInt().toFloat()
 
     companion object {
-        private const val DEFAULT_SIZE = 56f
+        private const val DEFAULT_SIZE = 56
+
         private const val DEFAULT_ICON_SIZE = 36f
         private const val DEFAULT_BACKGROUND_COLOR = "#61F4F6"
     }

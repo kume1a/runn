@@ -5,18 +5,19 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
-import android.view.View
 import androidx.annotation.ColorInt
 import com.kumela.runn.R
-import com.kumela.runn.ui.core.views.core.ViewUtils
-import kotlin.math.roundToInt
+import com.kumela.runn.ui.core.views.core.BaseView
 
 @Suppress("MemberVisibilityCanBePrivate")
 class OnboardingIndicator @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = R.attr.OnboardingIndicator
-) : View(context, attrs, defStyleAttr) {
+) : BaseView(context, attrs, defStyleAttr) {
+
+    override val defaultWidth: Int = DEFAULT_WIDTH
+    override val defaultHeight: Int = DEFAULT_HEIGHT
 
     sealed class IndicatorShape {
         data class Circle(val cx: Float, val cy: Float, val radius: Float) : IndicatorShape()
@@ -104,19 +105,6 @@ class OnboardingIndicator @JvmOverloads constructor(
         }
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-
-        val size = ViewUtils.measure(
-            widthMeasureSpec,
-            heightMeasureSpec,
-            DEFAULT_WIDTH.dpToPx().toInt(),
-            DEFAULT_HEIGHT.dpToPx().toInt()
-        )
-
-        setMeasuredDimension(size.width, size.height)
-    }
-
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         computeShapes(w, h)
@@ -169,12 +157,10 @@ class OnboardingIndicator @JvmOverloads constructor(
         }
     }
 
-    private fun Float.dpToPx(): Float =
-        (this * resources.displayMetrics.density).roundToInt().toFloat()
 
     companion object {
-        private const val DEFAULT_WIDTH = 60f
-        private const val DEFAULT_HEIGHT = 10f
+        private const val DEFAULT_WIDTH = 60
+        private const val DEFAULT_HEIGHT = 10
 
         private val DEFAULT_INACTIVE_COLOR = Color.parseColor("#222228")
         private val DEFAULT_ACTIVE_COLOR = Color.parseColor("#D7D7D8")

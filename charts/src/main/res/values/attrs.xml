@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TriplePieChart">
+        <attr name="colorOuter" format="color" />
+        <attr name="colorMiddle" format="color"/>
+        <attr name="colorInner" format="color" />
+        <attr name="colorInactive" format="color" />
+        <attr name="strokeWidth" format="dimension" />
+        <attr name="strokeMargin" format="dimension" />
+    </declare-styleable>
+
+    <attr name="TriplePieChart" format="reference" />
+</resources>

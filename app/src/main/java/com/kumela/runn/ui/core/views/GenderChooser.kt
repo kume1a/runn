@@ -9,23 +9,24 @@ import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.View
 import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.kumela.runn.R
 import com.kumela.runn.core.enums.Gender
-import com.kumela.runn.ui.core.views.core.ViewUtils
+import com.kumela.runn.ui.core.views.core.BaseView
 import kotlin.math.abs
-import kotlin.math.roundToInt
 
 @Suppress("MemberVisibilityCanBePrivate")
 class GenderChooser @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = R.attr.GenderChooser,
-) : View(context, attrs, defStyleAttr) {
+) : BaseView(context, attrs, defStyleAttr) {
+
+    override val defaultWidth: Int= DEFAULT_WIDTH
+    override val defaultHeight: Int = DEFAULT_HEIGHT
 
     fun interface OnChangeListener {
         fun onGenderChanged(gender: Gender)
@@ -155,18 +156,6 @@ class GenderChooser @JvmOverloads constructor(
         }
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-
-        val size = ViewUtils.measure(
-            widthMeasureSpec,
-            heightMeasureSpec,
-            DEFAULT_WIDTH.dpToPx().toInt(),
-            DEFAULT_HEIGHT.dpToPx().toInt()
-        )
-        setMeasuredDimension(size.width, size.height)
-    }
-
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
@@ -249,12 +238,10 @@ class GenderChooser @JvmOverloads constructor(
         this.onChangeListener = onChangeListener
     }
 
-    private fun Float.dpToPx(): Float =
-        (this * resources.displayMetrics.density).roundToInt().toFloat()
 
     companion object {
-        private const val DEFAULT_WIDTH = 180f
-        private const val DEFAULT_HEIGHT = 75f
+        private const val DEFAULT_WIDTH = 180
+        private const val DEFAULT_HEIGHT = 75
 
         private const val DEFAULT_MALE_ICON_RES = R.drawable.ic_male
         private const val DEFAULT_FEMALE_ICON_RES = R.drawable.ic_female

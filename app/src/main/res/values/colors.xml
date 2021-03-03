@@ -10,8 +10,8 @@
     <color name="icon_secondary">#B0B0B2</color>
 
     <color name="primary_surface">#17171A</color>
-    <color name="secondary_surface">#222228</color>
-    <color name="secondary_surface_variant">#343438</color>
+    <color name="secondary_surface">#27272D</color>
+    <color name="secondary_surface_light">#4D4E53</color>
 
     <color name="primary">#296BD7</color>
     <color name="accent">#18ffff</color>

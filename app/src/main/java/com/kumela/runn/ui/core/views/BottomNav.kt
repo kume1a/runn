@@ -17,10 +17,10 @@ import androidx.annotation.XmlRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.kumela.runn.R
+import com.kumela.runn.ui.core.views.core.BaseView
 import com.kumela.runn.ui.core.views.parsers.BottomNavParser
 import kotlinx.parcelize.Parcelize
 import kotlin.math.abs
-import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 
@@ -29,7 +29,10 @@ class BottomNav @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = R.attr.BottomNav,
-) : View(context, attrs, defStyleAttr) {
+) : BaseView(context, attrs, defStyleAttr) {
+
+    override val defaultWidth: Int = 0
+    override val defaultHeight: Int = 0
 
     data class Item(
         var title: String,
@@ -405,9 +408,6 @@ class BottomNav @JvmOverloads constructor(
         itemActiveIndex = 0
     }
 
-    private fun Float.dpToPx(): Float {
-        return (this * resources.displayMetrics.density).roundToInt().toFloat()
-    }
 
     companion object {
         private const val INVALID_RES = -1

@@ -19,7 +19,7 @@
         android:layout_gravity="bottom"
         android:translationY="54dp"
         android:visibility="gone"
-        app:backgroundColor="@color/secondary_surface_variant"
+        app:backgroundColor="@color/secondary_surface"
         app:iconTintActive="@color/accent"
         app:iconTintInactive="@color/icon_secondary"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
