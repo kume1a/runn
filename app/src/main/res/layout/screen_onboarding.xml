@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@id/text_gender_header"
         tools:visibility="visible" />
 
-    <com.kumela.runn.ui.core.views.GenderChooser
+    <com.kumela.views.GenderChooser
         android:id="@+id/gender_chooser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
         app:layout_constraintTop_toTopOf="@id/number_picker_height"
         tools:visibility="visible" />
 
-    <com.kumela.runn.ui.core.views.OnboardingIndicator
+    <com.kumela.views.OnboardingIndicator
         android:id="@+id/page_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

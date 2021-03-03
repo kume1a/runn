@@ -14,9 +14,9 @@ import butterknife.BindView
 import com.kumela.runn.R
 import com.kumela.runn.core.Constants
 import com.kumela.runn.core.base.BaseController
-import com.kumela.runn.core.enums.Gender
-import com.kumela.runn.ui.core.views.GenderChooser
-import com.kumela.runn.ui.core.views.OnboardingIndicator
+import com.kumela.views.enums.Gender
+import com.kumela.views.GenderChooser
+import com.kumela.views.OnboardingIndicator
 
 @SuppressLint("NonConstantResourceId")
 class OnboardingController :

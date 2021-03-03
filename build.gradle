@@ -20,6 +20,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -49,6 +50,8 @@ ext {
     roomVersion = '2.3.0-beta02'
 
     timberVersion = '4.7.1'
+
+    chartsVersion = 'v3.1.0'
 }
 
 task clean(type: Delete) {

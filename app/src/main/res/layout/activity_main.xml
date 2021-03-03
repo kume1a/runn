@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         tools:context=".core.main.MainActivity" />
 
-    <com.kumela.runn.ui.core.views.BottomNav
+    <com.kumela.views.BottomNav
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -28,7 +28,7 @@
         tools:translationY="0dp"
         tools:visibility="visible" />
 
-    <com.kumela.runn.ui.core.views.DiamondFab
+    <com.kumela.views.DiamondFab
         android:id="@+id/diamond_fab"
         android:layout_width="72dp"
         android:layout_height="72dp"

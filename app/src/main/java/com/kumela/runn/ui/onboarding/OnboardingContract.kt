@@ -1,6 +1,6 @@
 package com.kumela.runn.ui.onboarding
 
-import com.kumela.runn.core.enums.Gender
+import com.kumela.views.enums.Gender
 import com.kumela.runn.data.db.user.User
 import com.kumela.runn.ui.core.mvp.core.MvpModel
 import com.kumela.runn.ui.core.mvp.core.MvpPresenter

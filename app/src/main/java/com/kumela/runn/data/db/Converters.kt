@@ -1,7 +1,7 @@
 package com.kumela.runn.data.db
 
 import androidx.room.TypeConverter
-import com.kumela.runn.core.enums.Gender
+import com.kumela.views.enums.Gender
 
 class Converters {
     @TypeConverter

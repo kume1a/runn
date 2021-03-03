@@ -12,14 +12,14 @@ import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.kumela.runn.R
 import com.kumela.runn.core.base.BaseActivity
-import com.kumela.runn.ui.core.views.BottomNav
-import com.kumela.runn.ui.core.views.DiamondFab
 import com.kumela.runn.ui.home.HomeController
 import com.kumela.runn.ui.plans.PlansController
 import com.kumela.runn.ui.profile.ProfileController
 import com.kumela.runn.ui.splash.SplashController
 import com.kumela.runn.ui.statistics.StatisticsController
-import timber.log.Timber
+import com.kumela.views.BottomNav
+import com.kumela.views.DiamondFab
+import com.kumela.views.listeners.OnItemSelectedListener
 
 @SuppressLint("NonConstantResourceId")
 class MainActivity : BaseActivity() {
@@ -40,7 +40,7 @@ class MainActivity : BaseActivity() {
         handleBottomNavigation(router.backstack.first().controller)
 
         diamondFab.setOnClickListener { screenNavigator.toRun() }
-        bottomNav.onItemSelectedListener = BottomNav.OnItemSelectedListener { index ->
+        bottomNav.onItemSelectedListener = OnItemSelectedListener { index ->
             when (index) {
                 0 -> screenNavigator.toHome()
                 1 -> screenNavigator.toPlans()
@@ -68,8 +68,6 @@ class MainActivity : BaseActivity() {
     }
 
     private fun showBottomNavigation() {
-        Timber.d("showBottomNavigation() called")
-
         bottomNav.visibility = View.VISIBLE
         diamondFab.visibility = View.VISIBLE
 
@@ -78,8 +76,6 @@ class MainActivity : BaseActivity() {
     }
 
     private fun hideBottomNavigation() {
-        Timber.d("hideBottomNavigation() called")
-
         scaleViewTo(diamondFab, 0f, EXIT_ANIMATION_DURATION) { diamondFab.visibility = View.GONE }
         translateViewTo(bottomNav, bottomNav.height.toFloat(), EXIT_ANIMATION_DURATION) { bottomNav.visibility = View.GONE }
     }
