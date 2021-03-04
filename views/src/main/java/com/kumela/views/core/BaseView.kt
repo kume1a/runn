@@ -14,14 +14,14 @@ abstract class BaseView @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
 
     /**
-     * default width of view in dps
+     * default width of view in px
      */
-    protected abstract val defaultWidth: Int
+    protected abstract val defaultWidth: Float
 
     /**
-     * default height of view in dps
+     * default height of view in px
      */
-    protected abstract val defaultHeight: Int
+    protected abstract val defaultHeight: Float
 
     final override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -31,8 +31,8 @@ abstract class BaseView @JvmOverloads constructor(
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
         val heightSize = MeasureSpec.getSize(heightMeasureSpec)
 
-        val desiredWidth: Int = defaultWidth.toFloat().dpToPx().toInt()
-        val desiredHeight: Int = defaultHeight.toFloat().dpToPx().toInt()
+        val desiredWidth: Int = defaultWidth.toInt()
+        val desiredHeight: Int = defaultHeight.toInt()
 
         //Measure Width
         val width: Int = when (widthMode) {

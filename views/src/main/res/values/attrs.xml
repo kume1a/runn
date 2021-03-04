@@ -51,9 +51,20 @@
         <attr name="strokeMargin" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="BarChart">
+        <attr name="android:textSize" />
+        <attr name="backgroundLineHeight" format="dimension"/>
+        <attr name="android:textColor" />
+        <attr name="inactiveBarColor" format="color" />
+        <attr name="activeBarColor" format="color" />
+        <attr name="backgroundLineColor" format="color" />
+    </declare-styleable>
+
     <attr name="GenderChooser" format="reference" />
     <attr name="OnboardingIndicator" format="reference" />
     <attr name="BottomNav" format="reference" />
     <attr name="DiamondFab" format="reference" />
     <attr name="TriplePieChart" format="reference" />
+    <attr name="BarChart" format="reference" />
+    <attr name="BarChartBackground" format="reference" />
 </resources>

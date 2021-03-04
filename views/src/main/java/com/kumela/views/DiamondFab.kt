@@ -2,13 +2,13 @@ package com.kumela.views
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.getDrawableOrThrow
 import com.kumela.views.core.BaseView
 
@@ -19,12 +19,13 @@ class DiamondFab @JvmOverloads constructor(
     defStyleAttr: Int = R.attr.DiamondFab,
 ) : BaseView(context, attrs, defStyleAttr) {
 
-    override val defaultWidth: Int = DEFAULT_SIZE
-    override val defaultHeight: Int = DEFAULT_SIZE
+    override val defaultWidth: Float = resources.getDimension(R.dimen.diamond_fab_default_size)
+    override val defaultHeight: Float = resources.getDimension(R.dimen.diamond_fab_default_size)
 
     // Attribute Defaults
-    @Dimension private var _iconSize = DEFAULT_ICON_SIZE.dpToPx()
-    @ColorInt private var _backgroundColor = Color.parseColor(DEFAULT_BACKGROUND_COLOR)
+    @Dimension private var _iconSize = resources.getDimension(R.dimen.diamond_fab_default_icon_size)
+
+    @ColorInt private var _backgroundColor = ContextCompat.getColor(context, R.color.diamond_fab_default_background_color)
 
     // Core Attributes
     var icon: Drawable? = null
@@ -103,13 +104,5 @@ class DiamondFab @JvmOverloads constructor(
             (height / 2 + iconSize).toInt()
         )
         icon!!.draw(canvas)
-    }
-
-
-    companion object {
-        private const val DEFAULT_SIZE = 56
-
-        private const val DEFAULT_ICON_SIZE = 36f
-        private const val DEFAULT_BACKGROUND_COLOR = "#61F4F6"
     }
 }

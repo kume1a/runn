@@ -13,6 +13,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
 import androidx.annotation.FontRes
 import androidx.annotation.XmlRes
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.kumela.views.core.BaseView
@@ -30,8 +31,8 @@ class BottomNav @JvmOverloads constructor(
     defStyleAttr: Int = R.attr.BottomNav,
 ) : BaseView(context, attrs, defStyleAttr) {
 
-    override val defaultWidth: Int = 0
-    override val defaultHeight: Int = 0
+    override val defaultWidth: Float = resources.getDimension(R.dimen.bottom_nav_default_width)
+    override val defaultHeight: Float = resources.getDimension(R.dimen.bottom_nav_default_height)
 
     // Dynamic Variables
     private var itemWidth: Float = 0F
@@ -42,18 +43,18 @@ class BottomNav @JvmOverloads constructor(
     private var _itemActiveIndex: Int = 0
 
     // Attribute Defaults
-    @Dimension private var _barSideMargins = DEFAULT_SIDE_MARGIN.dpToPx()
-    @Dimension private var _itemPadding = DEFAULT_ITEM_PADDING.dpToPx()
-    @Dimension private var _itemIconSize = DEFAULT_ICON_SIZE.dpToPx()
-    @Dimension private var _itemIconMargin = DEFAULT_ICON_MARGIN.dpToPx()
-    @Dimension private var _itemTextSize = DEFAULT_TEXT_SIZE.dpToPx()
-    @Dimension private var _fabSize = DEFAULT_FAB_SIZE.dpToPx()
-    @Dimension private var _fabMargin = DEFAULT_FAB_MARGIN.dpToPx()
+    @Dimension private var _barSideMargins = resources.getDimension(R.dimen.bottom_nav_default_side_margin)
+    @Dimension private var _itemPadding = resources.getDimension(R.dimen.bottom_nav_default_item_padding)
+    @Dimension private var _itemIconSize = resources.getDimension(R.dimen.bottom_nav_default_icon_size)
+    @Dimension private var _itemIconMargin = resources.getDimension(R.dimen.bottom_nav_default_icon_margin)
+    @Dimension private var _itemTextSize = resources.getDimension(R.dimen.bottom_nav_default_text_size)
+    @Dimension private var _fabSize = resources.getDimension(R.dimen.bottom_nav_default_fab_size)
+    @Dimension private var _fabMargin = resources.getDimension(R.dimen.bottom_nav_default_fab_margin)
 
-    @ColorInt private var _itemIconTint = Color.parseColor(DEFAULT_TINT)
-    @ColorInt private var _barBackgroundColor = Color.WHITE
-    @ColorInt private var _itemIconTintActive = Color.WHITE
-    @ColorInt private var _itemTextColor = Color.WHITE
+    @ColorInt private var _itemIconTint = ContextCompat.getColor(context, R.color.bottom_nav_default_inactive_icon_tint)
+    @ColorInt private var _barBackgroundColor = ContextCompat.getColor(context, R.color.bottom_nav_default_background_color)
+    @ColorInt private var _itemIconTintActive = ContextCompat.getColor(context, R.color.bottom_nav_default_active_icon_tint)
+    @ColorInt private var _itemTextColor = ContextCompat.getColor(context, R.color.bottom_nav_default_text_color)
 
     @FontRes private var _itemFontFamily: Int = INVALID_RES
     @XmlRes private var _itemMenuRes: Int = INVALID_RES
@@ -399,17 +400,8 @@ class BottomNav @JvmOverloads constructor(
 
     companion object {
         private const val INVALID_RES = -1
-        private const val DEFAULT_TINT = "#C8FFFFFF"
 
-        private const val DEFAULT_SIDE_MARGIN = 10F
-        private const val DEFAULT_ITEM_PADDING = 10F
         private const val DEFAULT_ANIM_DURATION = 200L
-        private const val DEFAULT_ICON_SIZE = 20F
-        private const val DEFAULT_ICON_MARGIN = 4F
-        private const val DEFAULT_TEXT_SIZE = 12F
-
-        private const val DEFAULT_FAB_SIZE = 56F
-        private const val DEFAULT_FAB_MARGIN = 4F
 
         private const val OPAQUE = 255
         private const val TRANSPARENT = 0

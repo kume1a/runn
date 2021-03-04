@@ -4,7 +4,6 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
@@ -13,8 +12,8 @@ import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import com.kumela.views.enums.Gender
 import com.kumela.views.core.BaseView
+import com.kumela.views.enums.Gender
 import com.kumela.views.listeners.OnGenderChangedListener
 import kotlin.math.abs
 
@@ -25,8 +24,8 @@ class GenderChooser @JvmOverloads constructor(
     defStyleAttr: Int = R.attr.GenderChooser,
 ) : BaseView(context, attrs, defStyleAttr) {
 
-    override val defaultWidth: Int = DEFAULT_WIDTH
-    override val defaultHeight: Int = DEFAULT_HEIGHT
+    override val defaultWidth: Float = resources.getDimension(R.dimen.gender_chooser_default_width)
+    override val defaultHeight: Float = resources.getDimension(R.dimen.gender_chooser_default_height)
 
     private var onGenderChangedListener: OnGenderChangedListener? = null
 
@@ -47,10 +46,13 @@ class GenderChooser @JvmOverloads constructor(
     // Attribute Defaults
     private var _iconMale: Drawable? = ContextCompat.getDrawable(context, DEFAULT_MALE_ICON_RES)
     private var _iconFemale: Drawable? = ContextCompat.getDrawable(context, DEFAULT_FEMALE_ICON_RES)
-    @ColorInt private var _colorIcon: Int = DEFAULT_ICON_COLOR
-    @ColorInt private var _colorBackground: Int = DEFAULT_BACKGROUND_COLOR
-    @ColorInt private var _colorForeground: Int = DEFAULT_FOREGROUND_COLOR
-    @Dimension private var _iconSize: Float = DEFAULT_ICON_SIZE.dpToPx()
+
+    @ColorInt private var _colorIcon: Int = ContextCompat.getColor(context, R.color.gender_chooser_default_icon_color)
+    @ColorInt private var _colorBackground: Int = ContextCompat.getColor(context, R.color.gender_chooser_default_background_color)
+    @ColorInt private var _colorForeground: Int = ContextCompat.getColor(context, R.color.gender_chooser_default_indicator_color)
+
+    @Dimension private var _iconSize: Float = resources.getDimension(R.dimen.gender_chooser_default_icon_size)
+
     private var _animationDuration: Float = DEFAULT_ANIMATION_DURATION
 
     // Core Attributes
@@ -236,15 +238,9 @@ class GenderChooser @JvmOverloads constructor(
 
 
     companion object {
-        private const val DEFAULT_WIDTH = 180
-        private const val DEFAULT_HEIGHT = 75
-
         private val DEFAULT_MALE_ICON_RES = R.drawable.ic_male
         private val DEFAULT_FEMALE_ICON_RES = R.drawable.ic_female
-        private const val DEFAULT_ICON_COLOR = Color.WHITE
-        private val DEFAULT_BACKGROUND_COLOR = Color.parseColor("#222228")
-        private val DEFAULT_FOREGROUND_COLOR = Color.parseColor("#296BD7")
-        private const val DEFAULT_ICON_SIZE = 50f
+
         private const val DEFAULT_ANIMATION_DURATION = 300f
     }
 }

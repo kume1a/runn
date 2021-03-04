@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="triple_pie_chart_default_outer_color">#296BD7</color>
+    <color name="triple_pie_chart_default_middle_color">#FD724C</color>
+    <color name="triple_pie_chart_default_inner_color">#18ffff</color>
+    <color name="triple_pie_chart_default_inactive_color">#4D4E53</color>
+
+    <color name="bottom_nav_default_inactive_icon_tint">#C8FFFFFF</color>
+    <color name="bottom_nav_default_active_icon_tint">#18ffff</color>
+    <color name="bottom_nav_default_background_color">#4D4E53</color>
+    <color name="bottom_nav_default_text_color">#D7D7D8</color>
+
+    <color name="diamond_fab_default_background_color">#18ffff</color>
+
+    <color name="gender_chooser_default_icon_color">#ffffff</color>
+    <color name="gender_chooser_default_background_color">#222228</color>
+    <color name="gender_chooser_default_indicator_color">#296BD7</color>
+
+    <color name="onboarding_indicator_default_inactive_color">#222228</color>
+    <color name="onboarding_indicator_default_active_color">#D7D7D8</color>
+    
+    <color name="bar_chart_default_text_color">#848488</color>
+    <color name="bar_chart_default_inactive_bar_color">#848488</color>
+    <color name="bar_chart_default_active_bar_color">#18ffff</color>
+    <color name="bar_chart_default_background_line_color">#848488</color>
+</resources>

@@ -6,8 +6,8 @@
 
     <color name="text_primary">#D7D7D8</color>
     <color name="icon_primary">#D7D7D8</color>
-    <color name="text_secondary">#B0B0B2</color>
-    <color name="icon_secondary">#B0B0B2</color>
+    <color name="text_secondary">#848488</color>
+    <color name="icon_secondary">#848488</color>
 
     <color name="primary_surface">#17171A</color>
     <color name="secondary_surface">#27272D</color>

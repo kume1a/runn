@@ -3,13 +3,13 @@ package com.kumela.views.charts
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
 import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
 import androidx.annotation.FloatRange
+import androidx.core.content.ContextCompat
 import com.kumela.views.R
 import com.kumela.views.core.BaseView
 import com.kumela.views.core.ViewUtils
@@ -24,8 +24,8 @@ class TriplePieChart @JvmOverloads constructor(
     defStyleAttr: Int = R.attr.TriplePieChart,
 ) : BaseView(context, attrs, defStyleAttr) {
 
-    override val defaultWidth: Int = DEFAULT_SIZE
-    override val defaultHeight: Int = DEFAULT_SIZE
+    override val defaultWidth: Float = resources.getDimension(R.dimen.triple_pie_chart_default_size)
+    override val defaultHeight: Float = resources.getDimension(R.dimen.triple_pie_chart_default_size)
 
     // Dynamic Variables
     private val items = mutableMapOf<Ring, TriplePieChartItem>()
@@ -36,13 +36,13 @@ class TriplePieChart @JvmOverloads constructor(
     )
 
     // Attribute Defaults
-    @ColorInt private var _colorOuter = Color.parseColor(DEFAULT_OUTER_COLOR)
-    @ColorInt private var _colorMiddle = Color.parseColor(DEFAULT_MIDDLE_COLOR)
-    @ColorInt private var _colorInner = Color.parseColor(DEFAULT_INNER_COLOR)
-    @ColorInt private var _colorInactive = Color.parseColor(DEFAULT_INACTIVE_COLOR)
+    @ColorInt private var _colorOuter = ContextCompat.getColor(context, R.color.triple_pie_chart_default_outer_color)
+    @ColorInt private var _colorMiddle = ContextCompat.getColor(context, R.color.triple_pie_chart_default_middle_color)
+    @ColorInt private var _colorInner = ContextCompat.getColor(context, R.color.triple_pie_chart_default_inner_color)
+    @ColorInt private var _colorInactive = ContextCompat.getColor(context, R.color.triple_pie_chart_default_inactive_color)
 
-    @Dimension private var _strokeWidth = DEFAULT_STROKE_WIDTH.dpToPx()
-    @Dimension private var _strokeMargin = DEFAULT_STROKE_MARGIN.dpToPx()
+    @Dimension private var _strokeWidth = resources.getDimension(R.dimen.triple_pie_chart_default_stroke_width)
+    @Dimension private var _strokeMargin = resources.getDimension(R.dimen.triple_pie_chart_default_stroke_margin)
 
     // Core Attributes
     var colorOuter: Int
@@ -135,12 +135,9 @@ class TriplePieChart @JvmOverloads constructor(
             colorOuter = typedArray.getColor(R.styleable.TriplePieChart_colorOuter, colorOuter)
             colorMiddle = typedArray.getColor(R.styleable.TriplePieChart_colorMiddle, colorMiddle)
             colorInner = typedArray.getColor(R.styleable.TriplePieChart_colorInner, colorInner)
-            colorInactive =
-                typedArray.getColor(R.styleable.TriplePieChart_colorInactive, colorInactive)
-            strokeWidth =
-                typedArray.getDimension(R.styleable.TriplePieChart_strokeWidth, strokeWidth)
-            strokeMargin =
-                typedArray.getDimension(R.styleable.TriplePieChart_strokeMargin, strokeMargin)
+            colorInactive = typedArray.getColor(R.styleable.TriplePieChart_colorInactive, colorInactive)
+            strokeWidth = typedArray.getDimension(R.styleable.TriplePieChart_strokeWidth, strokeWidth)
+            strokeMargin = typedArray.getDimension(R.styleable.TriplePieChart_strokeMargin, strokeMargin)
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
@@ -230,17 +227,4 @@ class TriplePieChart @JvmOverloads constructor(
         ringProgresses[ring] = progress
         animateProgressChange(ring, progress)
     }
-
-    companion object {
-        private const val DEFAULT_SIZE = 50
-
-        private const val DEFAULT_OUTER_COLOR = "#296BD7"
-        private const val DEFAULT_MIDDLE_COLOR = "#FD724C"
-        private const val DEFAULT_INNER_COLOR = "#18ffff"
-        private const val DEFAULT_INACTIVE_COLOR = "#4D4E53"
-
-        private const val DEFAULT_STROKE_WIDTH = 12f
-        private const val DEFAULT_STROKE_MARGIN = 6f
-    }
-
 }

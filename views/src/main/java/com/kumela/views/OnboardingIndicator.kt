@@ -2,10 +2,10 @@ package com.kumela.views
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
 import com.kumela.views.core.BaseView
 import com.kumela.views.model.IndicatorShape
 
@@ -16,8 +16,8 @@ class OnboardingIndicator @JvmOverloads constructor(
     defStyleAttr: Int = R.attr.OnboardingIndicator
 ) : BaseView(context, attrs, defStyleAttr) {
 
-    override val defaultWidth: Int = DEFAULT_WIDTH
-    override val defaultHeight: Int = DEFAULT_HEIGHT
+    override val defaultWidth: Float = resources.getDimension(R.dimen.onboarding_indicator_default_width)
+    override val defaultHeight: Float = resources.getDimension(R.dimen.onboarding_indicator_default_height)
 
     // Dynamic Variables
     private val shapes: MutableList<IndicatorShape> = ArrayList()
@@ -34,8 +34,8 @@ class OnboardingIndicator @JvmOverloads constructor(
         }
 
     // Attribute Defaults
-    @ColorInt private var _colorActive = DEFAULT_ACTIVE_COLOR
-    @ColorInt private var _colorInactive = DEFAULT_INACTIVE_COLOR
+    @ColorInt private var _colorActive = ContextCompat.getColor(context, R.color.onboarding_indicator_default_active_color)
+    @ColorInt private var _colorInactive = ContextCompat.getColor(context, R.color.onboarding_indicator_default_inactive_color)
     private var _indicatorCount = 0
 
     // Core Attributes
@@ -149,14 +149,5 @@ class OnboardingIndicator @JvmOverloads constructor(
                 lastX += inactiveIndicatorWidth * 2
             }
         }
-    }
-
-
-    companion object {
-        private const val DEFAULT_WIDTH = 60
-        private const val DEFAULT_HEIGHT = 10
-
-        private val DEFAULT_INACTIVE_COLOR = Color.parseColor("#222228")
-        private val DEFAULT_ACTIVE_COLOR = Color.parseColor("#D7D7D8")
     }
 }
