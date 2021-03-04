@@ -1,12 +1,9 @@
 package com.kumela.views.charts.bar
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
@@ -20,18 +17,15 @@ internal class BarChartRecyclerView @JvmOverloads constructor(
     defStyleAttrs: Int = 0,
 ) : RecyclerView(context, attrs, defStyleAttrs) {
 
-    internal data class BarChartItem(
-        val id: Int,
-        val value: Int,
-        var isSelected: Boolean,
-    )
-
     var activeColor = ContextCompat.getColor(context, R.color.bar_chart_default_active_bar_color)
     var inactiveColor = ContextCompat.getColor(context, R.color.bar_chart_default_inactive_bar_color)
+    var barItemClickListener: ((BarChartItem) -> Unit)? = null
 
     init {
-        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        adapter = BarAdapter(activeColor, inactiveColor)
+        val lm = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
+        lm.stackFromEnd = true
+        layoutManager = lm
+        adapter = BarAdapter(activeColor, inactiveColor) { barItemClickListener?.invoke(it) }
         overScrollMode = OVER_SCROLL_NEVER
     }
 
@@ -53,17 +47,14 @@ internal class BarChartRecyclerView @JvmOverloads constructor(
     private class BarAdapter(
         @ColorInt private val defaultActiveColor: Int,
         @ColorInt private val defaultInactiveColor: Int,
-    ) : RecyclerView.Adapter<BarAdapter.BarViewHolder>() {
+        private val onBarClickedListener: (BarChartItem) -> Unit,
+    ) : RecyclerView.Adapter<BarAdapter.BarViewHolder>(), BarItemViewMvc.Listener {
 
-        private val items = mutableListOf<BarChartItem>() 
+        private val items = mutableListOf<BarChartItem>()
         private var maxBound = 0
 
         var interval: Int = 0
         var intervalHeight: Float = 0f
-
-        private fun interface OnBarClickedListener {
-            fun onBarClicked(position: Int)
-        }
 
         fun bindData(data: List<BarChartItem>?) {
             items.clear()
@@ -79,49 +70,37 @@ internal class BarChartRecyclerView @JvmOverloads constructor(
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BarViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_bar, parent, false)
-            return BarViewHolder(view) { position ->
-                items[position].isSelected = !items[position].isSelected
-                var selectedPosition: Int? = null
-                if (items[position].isSelected) {
-                    items.forEachIndexed { index, barChartItem ->
-                        if (index != position && barChartItem.isSelected) {
-                            barChartItem.isSelected = false
-                            selectedPosition = index
-                        }
-                    }
-                }
-                notifyItemChanged(position)
-                if (selectedPosition != null) notifyItemChanged(selectedPosition!!)
-            }
+            val viewMvc = BarItemViewMvc(LayoutInflater.from(parent.context), parent)
+            viewMvc.registerListener(this)
+            return BarViewHolder(viewMvc)
         }
 
         override fun onBindViewHolder(holder: BarViewHolder, position: Int) {
-            val item = items[position]
-
-            holder.viewBar.backgroundTintList = ColorStateList.valueOf(if (item.isSelected) defaultActiveColor else defaultInactiveColor)
-            holder.textLabel.visibility = if (item.isSelected) View.VISIBLE else View.GONE
-            holder.textLabel.text = item.value.toString()
-
-            val barLayoutParams = holder.viewBar.layoutParams
-            barLayoutParams.height = ((item.value.toFloat() / interval.toFloat()) * intervalHeight).toInt()
-            holder.viewBar.layoutParams = barLayoutParams
+            holder.barItemViewMvc.bind(items[position], defaultActiveColor, defaultInactiveColor, interval, intervalHeight)
         }
 
         override fun getItemCount(): Int = items.size
 
-        private class BarViewHolder(
-            itemView: View,
-            onBarClickListener: OnBarClickedListener,
-        ) : RecyclerView.ViewHolder(itemView) {
+        private class BarViewHolder(val barItemViewMvc: BarItemViewMvc) : RecyclerView.ViewHolder(barItemViewMvc.rootView)
 
-            val viewBar: View = itemView.findViewById(R.id.view_bar)
-            val textLabel: TextView = itemView.findViewById(R.id.text_label)
+        override fun onBarClicked(barChartItem: BarChartItem) {
+            val position = items.indexOf(barChartItem)
 
-            init {
-                itemView.setOnClickListener {
-                    onBarClickListener.onBarClicked(adapterPosition)
+            items[position].isSelected = !items[position].isSelected
+            var selectedPosition: Int? = null
+            if (items[position].isSelected) {
+                items.forEachIndexed { index, item ->
+                    if (index != position && item.isSelected) {
+                        item.isSelected = false
+                        selectedPosition = index
+                    }
                 }
+            }
+            notifyItemChanged(position)
+            if (selectedPosition != null) notifyItemChanged(selectedPosition!!)
+
+            if (items[position].isSelected) {
+                onBarClickedListener.invoke(barChartItem)
             }
         }
 

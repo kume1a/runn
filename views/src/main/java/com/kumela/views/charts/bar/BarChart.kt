@@ -13,6 +13,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.updatePadding
 import com.kumela.views.R
 import com.kumela.views.core.ViewUtils
+import com.kumela.views.listeners.BarEntryClickListener
 import com.kumela.views.model.BarChartEntry
 
 @Suppress("MemberVisibilityCanBePrivate", "unused")
@@ -31,9 +32,13 @@ class BarChart @JvmOverloads constructor(
     fun bindData(d: List<BarChartEntry>) {
         data.clear()
         data.addAll(d)
-        barChartRecyclerView.bindData(data.map { BarChartRecyclerView.BarChartItem(it.id, it.value, false) })
+        barChartRecyclerView.bindData(data.map {
+            BarChartItem(it.id, it.value, it.date, d.indexOf(it) == 0)
+        })
         post { updateLabels() }
     }
+
+    var barItemClickListener: BarEntryClickListener? = null
 
     // Attribute Defaults
     @Dimension private var _textSize = resources.getDimension(R.dimen.bar_chart_default_text_size)
@@ -124,6 +129,9 @@ class BarChart @JvmOverloads constructor(
     init {
         setWillNotDraw(false)
         addView(barChartRecyclerView)
+        barChartRecyclerView.barItemClickListener = { barChartItem ->
+            barItemClickListener?.onBarClicked(BarChartEntry(barChartItem.id, barChartItem.value, barChartItem.date))
+        }
 
         val typedArray = context.theme.obtainStyledAttributes(
             attrs,
@@ -175,7 +183,10 @@ class BarChart @JvmOverloads constructor(
     }
 
     private fun updateLabels() {
-        barChartLabelRenderer.updateValues(data.map { it.value }, resources.getDimension(R.dimen.bar_chart_default_text_margin), height, paintText)
+        barChartLabelRenderer.updateValues(data.map { it.value },
+            resources.getDimension(R.dimen.bar_chart_default_text_margin),
+            height,
+            paintText)
 
         val interval = barChartLabelRenderer.interval
         val intervalHeight = barChartLabelRenderer.intervalHeight
