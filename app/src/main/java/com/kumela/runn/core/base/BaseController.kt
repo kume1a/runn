@@ -9,10 +9,10 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import butterknife.ButterKnife
 import butterknife.Unbinder
+import com.kumela.mvx.mvp.MvpBaseController
+import com.kumela.mvx.mvp.core.MvpPresenter
+import com.kumela.mvx.mvp.core.MvpView
 import com.kumela.runn.di.injectors.Injector
-import com.kumela.runn.ui.core.mvp.MvpBaseController
-import com.kumela.runn.ui.core.mvp.core.MvpPresenter
-import com.kumela.runn.ui.core.mvp.core.MvpView
 
 abstract class BaseController<V: MvpView, P: MvpPresenter<V>> : MvpBaseController<V, P> {
 

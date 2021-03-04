@@ -1,5 +1,6 @@
 package com.kumela.runn.ui.plans
 
-import com.kumela.runn.ui.core.mvp.MvpBasePresenter
+import com.kumela.mvx.mvp.MvpBasePresenter
+
 
 class PlansPresenter : MvpBasePresenter<PlansContract.View>(), PlansContract.Presenter

@@ -1,6 +1,7 @@
 package com.kumela.runn.ui.home
 
-import com.kumela.runn.ui.core.mvp.SavedStatePresenter
+import com.kumela.mvx.mvp.SavedStatePresenter
+
 
 class HomePresenter : SavedStatePresenter<HomeContract.View, HomePresenter.SavedState>(SavedState()),
     HomeContract.Presenter {

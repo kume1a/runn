@@ -1,3 +1,4 @@
+include ':mvx'
 include ':views'
 include ':app'
 rootProject.name = "Runn"

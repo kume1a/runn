@@ -1,15 +1,16 @@
-package com.kumela.runn.ui.core.mvp
+package com.kumela.mvx.mvp
 
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.bluelinelabs.conductor.Controller
-import com.kumela.runn.ui.core.mvp.core.MvpPresenter
-import com.kumela.runn.ui.core.mvp.core.MvpView
-import com.kumela.runn.ui.core.mvp.delegate.ControllerMvpDelegate
-import com.kumela.runn.ui.core.mvp.delegate.ControllerMvpDelegateImpl
+import com.kumela.mvx.mvp.core.MvpPresenter
+import com.kumela.mvx.mvp.core.MvpView
+import com.kumela.mvx.mvp.delegate.ControllerMvpDelegate
+import com.kumela.mvx.mvp.delegate.ControllerMvpDelegateImpl
 import javax.inject.Inject
 
+@Suppress("unused")
 abstract class MvpBaseController<V : MvpView, P : MvpPresenter<V>> : Controller, MvpView {
 
     constructor()

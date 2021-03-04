@@ -1,8 +1,8 @@
-package com.kumela.runn.ui.core.mvp
+package com.kumela.mvx.mvp
 
 import androidx.annotation.UiThread
-import com.kumela.runn.ui.core.mvp.core.MvpPresenter
-import com.kumela.runn.ui.core.mvp.core.MvpView
+import com.kumela.mvx.mvp.core.MvpPresenter
+import com.kumela.mvx.mvp.core.MvpView
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import java.lang.ref.WeakReference
 

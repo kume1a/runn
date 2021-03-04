@@ -55,6 +55,7 @@
         <attr name="android:textSize" />
         <attr name="backgroundLineHeight" format="dimension"/>
         <attr name="android:textColor" />
+        <attr name="fontFamily" />
         <attr name="inactiveBarColor" format="color" />
         <attr name="activeBarColor" format="color" />
         <attr name="backgroundLineColor" format="color" />

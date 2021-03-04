@@ -1,4 +1,4 @@
-package com.kumela.runn.ui.core.mvp.core
+package com.kumela.mvx.mvp.core
 
 import androidx.annotation.UiThread
 

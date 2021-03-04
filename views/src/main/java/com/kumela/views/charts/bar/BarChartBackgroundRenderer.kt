@@ -3,13 +3,13 @@ package com.kumela.views.charts.bar
 import android.graphics.Canvas
 import android.graphics.Paint
 import androidx.annotation.Dimension
-import com.kumela.views.core.ValueIntervalFormatter
+import androidx.annotation.IntRange
 import com.kumela.views.core.ViewUtils.textBounds
+import kotlin.math.ceil
 
 class BarChartBackgroundRenderer {
 
     private val intervals = mutableListOf<Int>()
-    private val valueIntervalFormatter = ValueIntervalFormatter()
     private val intervalPositions = mutableListOf<Float>()
 
     val interval: Int?
@@ -26,7 +26,7 @@ class BarChartBackgroundRenderer {
             val intervalCount = ((h + textMargin) / (textHeight + textMargin)).toInt()
 
             intervals.clear()
-            intervals.addAll(valueIntervalFormatter.formatMaxValueIntervals(max, intervalCount))
+            intervals.addAll(formatMaxValueIntervals(max, intervalCount))
 
             intervalPositions.clear()
             for (index in 0 until intervals.size) {
@@ -66,5 +66,14 @@ class BarChartBackgroundRenderer {
 
     private fun renderLabel(text: String, position: Float, canvas: Canvas, paintText: Paint) {
         canvas.drawText(text, 0f, position, paintText)
+    }
+
+    private fun formatMaxValueIntervals(
+        @IntRange(from = 0, to = 100000) max: Int,
+        @IntRange(from = 0) size: Int,
+    ): List<Int> {
+        val nextThousand = (ceil(max / 1000.0) * 1000).toFloat()
+        val interval = nextThousand / (size - 1)
+        return List(size) { index -> (index * interval).toInt() }
     }
 }

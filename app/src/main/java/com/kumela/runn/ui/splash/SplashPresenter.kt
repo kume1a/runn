@@ -2,10 +2,11 @@ package com.kumela.runn.ui.splash
 
 import android.os.Handler
 import android.os.Looper
-import com.kumela.runn.ui.core.mvp.MvpBasePresenter
+import com.kumela.mvx.mvp.MvpBasePresenter
 import com.kumela.runn.ui.core.navigation.ScreenNavigator
 import timber.log.Timber
 import kotlin.system.exitProcess
+
 
 class SplashPresenter constructor(
     private val screenNavigator: ScreenNavigator,

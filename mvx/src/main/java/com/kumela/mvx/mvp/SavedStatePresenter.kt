@@ -1,6 +1,6 @@
-package com.kumela.runn.ui.core.mvp
+package com.kumela.mvx.mvp
 
-import com.kumela.runn.ui.core.mvp.core.MvpView
+import com.kumela.mvx.mvp.core.MvpView
 
 abstract class SavedStatePresenter<V : MvpView, S>(initialState: S) :
     MvpBasePresenter<V>() {

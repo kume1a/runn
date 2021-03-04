@@ -1,9 +1,9 @@
 package com.kumela.runn.ui.onboarding
 
+import com.kumela.mvx.mvp.SavedStatePresenter
 import com.kumela.runn.core.Constants
 import com.kumela.views.enums.Gender
 import com.kumela.runn.data.db.user.User
-import com.kumela.runn.ui.core.mvp.SavedStatePresenter
 import com.kumela.runn.ui.core.navigation.ScreenNavigator
 import timber.log.Timber
 

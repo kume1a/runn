@@ -255,6 +255,7 @@
                 <com.kumela.views.charts.bar.BarChart
                     android:id="@+id/chart_steps"
                     android:layout_width="0dp"
+                    app:fontFamily="@font/montserrat"
                     android:layout_height="180dp"
                     android:textColor="@color/text_secondary"
                     android:layout_marginTop="12dp"

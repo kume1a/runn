@@ -1,8 +1,9 @@
 package com.kumela.runn.ui.statistics
 
-import com.kumela.runn.ui.core.mvp.core.MvpModel
-import com.kumela.runn.ui.core.mvp.core.MvpPresenter
-import com.kumela.runn.ui.core.mvp.core.MvpView
+import com.kumela.mvx.mvp.core.MvpModel
+import com.kumela.mvx.mvp.core.MvpPresenter
+import com.kumela.mvx.mvp.core.MvpView
+
 
 interface StatisticsContract {
 

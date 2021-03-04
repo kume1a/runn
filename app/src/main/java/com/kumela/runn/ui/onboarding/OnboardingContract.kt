@@ -1,11 +1,12 @@
 package com.kumela.runn.ui.onboarding
 
-import com.kumela.views.enums.Gender
+import com.kumela.mvx.mvp.core.MvpModel
+import com.kumela.mvx.mvp.core.MvpPresenter
+import com.kumela.mvx.mvp.core.MvpView
 import com.kumela.runn.data.db.user.User
-import com.kumela.runn.ui.core.mvp.core.MvpModel
-import com.kumela.runn.ui.core.mvp.core.MvpPresenter
-import com.kumela.runn.ui.core.mvp.core.MvpView
+import com.kumela.views.enums.Gender
 import io.reactivex.rxjava3.core.Completable
+
 
 interface OnboardingContract {
 

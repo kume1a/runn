@@ -1,13 +1,13 @@
-package com.kumela.runn.ui.core.mvp.delegate
+package com.kumela.mvx.mvp.delegate
 
 import android.content.Context
 import android.view.View
-import com.kumela.runn.ui.core.mvp.MvpBaseController
-import com.kumela.runn.ui.core.mvp.core.MvpPresenter
-import com.kumela.runn.ui.core.mvp.core.MvpView
+import com.kumela.mvx.mvp.MvpBaseController
+import com.kumela.mvx.mvp.core.MvpPresenter
+import com.kumela.mvx.mvp.core.MvpView
 
 
-class ControllerMvpDelegateImpl<V : MvpView, P : MvpPresenter<V>>(
+internal class ControllerMvpDelegateImpl<V : MvpView, P : MvpPresenter<V>>(
     private var delegateCallback: MvpBaseController<V, P>
 //    private var controller: Controller
 ) : ControllerMvpDelegate<V, P> {

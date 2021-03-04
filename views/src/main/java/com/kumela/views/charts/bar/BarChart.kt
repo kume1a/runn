@@ -7,7 +7,9 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
+import androidx.annotation.FontRes
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.updatePadding
 import com.kumela.views.R
 import com.kumela.views.core.ViewUtils
@@ -42,6 +44,7 @@ class BarChart @JvmOverloads constructor(
     @ColorInt private var _activeBarColor = ContextCompat.getColor(context, R.color.bar_chart_default_active_bar_color)
     @ColorInt private var _backgroundLineColor = ContextCompat.getColor(context, R.color.bar_chart_default_background_line_color)
 
+    @FontRes private var _textFontFamily = -1
 
     // Core Attributes
     private var textSize: Float
@@ -91,6 +94,17 @@ class BarChart @JvmOverloads constructor(
             invalidate()
         }
 
+    private var textFontFamily: Int
+        @FontRes get() = _textFontFamily
+        set(@FontRes value) {
+            _textFontFamily = value
+            if (value != -1) {
+                paintText.typeface = ResourcesCompat.getFont(context, value)
+                invalidate()
+            }
+        }
+
+
     // paints
     private val paintText = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
@@ -125,6 +139,7 @@ class BarChart @JvmOverloads constructor(
             inactiveBarColor = typedArray.getColor(R.styleable.BarChart_inactiveBarColor, inactiveBarColor)
             activeBarColor = typedArray.getColor(R.styleable.BarChart_activeBarColor, activeBarColor)
             backgroundLineColor = typedArray.getColor(R.styleable.BarChart_backgroundLineColor, backgroundLineColor)
+            textFontFamily = typedArray.getResourceId(R.styleable.BarChart_fontFamily, textFontFamily)
 
             barChartRecyclerView.activeColor = activeBarColor
             barChartRecyclerView.inactiveColor = inactiveBarColor
@@ -138,9 +153,8 @@ class BarChart @JvmOverloads constructor(
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
 
-        val maximumValue = data.maxByOrNull { it.value }
-        if (maximumValue != null) {
-            val textWidth = paintText.measureText(maximumValue.value.toString())
+        data.maxByOrNull { it.value }?.value?.let { maxValue ->
+            val textWidth = paintText.measureText(maxValue.toString())
             barChartRecyclerView.updatePadding(left = (textWidth + ViewUtils.dpToPx(context, 15f)).toInt())
 
             updateLabels()
@@ -156,16 +170,13 @@ class BarChart @JvmOverloads constructor(
             barChartRecyclerView.paddingStart.toFloat(),
             canvas,
             paintText,
-            paintBackgroundLine)
+            paintBackgroundLine
+        )
     }
 
     private fun updateLabels() {
-        barChartLabelRenderer.updateValues(
-            data.map { it.value },
-            resources.getDimension(R.dimen.bar_chart_default_text_margin),
-            height,
-            paintText
-        )
+        barChartLabelRenderer.updateValues(data.map { it.value }, resources.getDimension(R.dimen.bar_chart_default_text_margin), height, paintText)
+
         val interval = barChartLabelRenderer.interval
         val intervalHeight = barChartLabelRenderer.intervalHeight
         if (interval != null && intervalHeight != null) {

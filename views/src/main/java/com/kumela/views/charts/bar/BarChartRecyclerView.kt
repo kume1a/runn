@@ -30,7 +30,7 @@ internal class BarChartRecyclerView @JvmOverloads constructor(
     var inactiveColor = ContextCompat.getColor(context, R.color.bar_chart_default_inactive_bar_color)
 
     init {
-        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
+        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         adapter = BarAdapter(activeColor, inactiveColor)
         overScrollMode = OVER_SCROLL_NEVER
     }
@@ -55,7 +55,7 @@ internal class BarChartRecyclerView @JvmOverloads constructor(
         @ColorInt private val defaultInactiveColor: Int,
     ) : RecyclerView.Adapter<BarAdapter.BarViewHolder>() {
 
-        private val items = mutableListOf<BarChartItem>()
+        private val items = mutableListOf<BarChartItem>() 
         private var maxBound = 0
 
         var interval: Int = 0
@@ -110,7 +110,11 @@ internal class BarChartRecyclerView @JvmOverloads constructor(
 
         override fun getItemCount(): Int = items.size
 
-        private class BarViewHolder(itemView: View, onBarClickListener: OnBarClickedListener) : RecyclerView.ViewHolder(itemView) {
+        private class BarViewHolder(
+            itemView: View,
+            onBarClickListener: OnBarClickedListener,
+        ) : RecyclerView.ViewHolder(itemView) {
+
             val viewBar: View = itemView.findViewById(R.id.view_bar)
             val textLabel: TextView = itemView.findViewById(R.id.text_label)
 
@@ -120,21 +124,21 @@ internal class BarChartRecyclerView @JvmOverloads constructor(
                 }
             }
         }
-    }
 
-    private class BarChartEntryDiffCallback(
-        private val oldList: List<BarChartItem>,
-        private val newList: List<BarChartItem>,
-    ) : DiffUtil.Callback() {
+        private class BarChartEntryDiffCallback(
+            private val oldList: List<BarChartItem>,
+            private val newList: List<BarChartItem>,
+        ) : DiffUtil.Callback() {
 
-        override fun getOldListSize(): Int = oldList.size
+            override fun getOldListSize(): Int = oldList.size
 
-        override fun getNewListSize(): Int = newList.size
+            override fun getNewListSize(): Int = newList.size
 
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-            oldList[oldItemPosition].id == newList[newItemPosition].id
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+                oldList[oldItemPosition].id == newList[newItemPosition].id
 
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-            oldList[oldItemPosition] == newList[newItemPosition]
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+                oldList[oldItemPosition] == newList[newItemPosition]
+        }
     }
 }
