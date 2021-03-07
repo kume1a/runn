@@ -1,6 +1,7 @@
 package com.kumela.mvx.mvp
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.bluelinelabs.conductor.Controller
@@ -34,5 +35,15 @@ abstract class MvpBaseController<V : MvpView, P : MvpPresenter<V>> : Controller,
     override fun onDestroyView(view: View) {
         super.onDestroyView(view)
         mvpDelegate.onDestroyView(view)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        presenter.onResult(requestCode, resultCode, data)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        presenter.onRequestPermissionResult(requestCode, permissions, grantResults)
     }
 }

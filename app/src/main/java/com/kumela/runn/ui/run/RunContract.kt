@@ -6,8 +6,20 @@ import com.kumela.mvx.mvp.core.MvpView
 
 interface RunContract {
 
-    interface View: MvpView
+    interface View: MvpView {
+        fun startService()
+        fun endService()
 
-    interface Presenter: MvpPresenter<View>
+        fun isLocationPermissionGranted(): Boolean
+        fun shouldShowLocationPermissionRationale(): Boolean
+        fun requestLocationPermissions(requestCode: Int)
+        fun showPermissionRationale(requestCode: Int)
+        fun showPermissionSettingsRouteView()
+    }
+
+    interface Presenter: MvpPresenter<View> {
+        fun onStartClicked()
+        fun onStopClicked()
+    }
 
 }

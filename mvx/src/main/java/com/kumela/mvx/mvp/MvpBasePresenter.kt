@@ -1,5 +1,6 @@
 package com.kumela.mvx.mvp
 
+import android.content.Intent
 import androidx.annotation.UiThread
 import com.kumela.mvx.mvp.core.MvpPresenter
 import com.kumela.mvx.mvp.core.MvpView
@@ -15,12 +16,6 @@ abstract class MvpBasePresenter<V : MvpView> : MvpPresenter<V> {
 
     private var viewRef: WeakReference<V>? = null
     protected val disposables = CompositeDisposable()
-
-    @UiThread
-    override fun onViewAttached() {}
-
-    @UiThread
-    override fun onViewDetaching() {}
 
     protected val view: V?
         @UiThread get() = viewRef?.get()
@@ -52,4 +47,10 @@ abstract class MvpBasePresenter<V : MvpView> : MvpPresenter<V> {
         }
         disposables.clear()
     }
+
+    override fun onViewAttached() {}
+    override fun onViewDetaching() {}
+
+    override fun onRequestPermissionResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {}
+    override fun onResult(requestCode: Int, resultCode: Int, data: Intent?) {}
 }

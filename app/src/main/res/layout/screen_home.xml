@@ -244,14 +244,6 @@
                     app:layout_constraintStart_toStartOf="@id/text_steps_count"
                     app:layout_constraintTop_toBottomOf="@id/text_steps_count" />
 
-                <View
-                    android:id="@+id/time_period_chooser"
-                    android:layout_width="90dp"
-                    android:layout_height="36dp"
-                    android:background="@color/primary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <com.kumela.views.charts.bar.BarChart
                     android:id="@+id/chart_steps"
                     android:layout_width="0dp"

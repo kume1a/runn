@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class BaseApplication : Application() {
 
-    private lateinit var appComponent: AppComponent
+    lateinit var appComponent: AppComponent
 
     @Inject lateinit var activityInjector: ActivityInjector
 

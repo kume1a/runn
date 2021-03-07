@@ -3,6 +3,8 @@ package com.kumela.runn.di.app
 import com.kumela.runn.core.base.BaseApplication
 import com.kumela.runn.data.db.DatabaseModule
 import com.kumela.runn.di.common.ActivityBindingModule
+import com.kumela.runn.di.service.ServiceComponent
+import com.kumela.runn.di.service.ServiceModule
 import dagger.Component
 import javax.inject.Singleton
 
@@ -16,4 +18,6 @@ import javax.inject.Singleton
 )
 interface AppComponent {
     fun inject(app: BaseApplication)
+
+    fun newServiceComponent(serviceModule: ServiceModule): ServiceComponent
 }

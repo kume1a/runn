@@ -51,7 +51,9 @@ ext {
 
     timberVersion = '4.7.1'
 
-    chartsVersion = 'v3.1.0'
+//    chartsVersion = 'v3.1.0'
+
+    locationVersion = '18.0.0'
 }
 
 task clean(type: Delete) {

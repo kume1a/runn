@@ -4,6 +4,8 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -12,6 +14,7 @@ import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.kumela.runn.R
 import com.kumela.runn.core.base.BaseActivity
+import com.kumela.runn.notifications.AppNotificationManager
 import com.kumela.runn.ui.home.HomeController
 import com.kumela.runn.ui.plans.PlansController
 import com.kumela.runn.ui.profile.ProfileController
@@ -37,7 +40,12 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        handleBottomNavigation(router.backstack.first().controller)
+        val launchedFromNotification = intent.getBooleanExtra(AppNotificationManager.EXTRA_STARTED_FROM_NOTIFICATION, false)
+        if (launchedFromNotification) {
+            Handler(Looper.getMainLooper()).postDelayed({screenNavigator.toRun()}, 1300L)
+        }
+
+        handleBottomNavigation(router.backstack.last().controller)
 
         diamondFab.setOnClickListener { screenNavigator.toRun() }
         bottomNav.onItemSelectedListener = OnItemSelectedListener { index ->

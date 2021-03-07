@@ -1,11 +1,12 @@
 package com.kumela.runn.ui.splash
 
 import com.kumela.runn.di.annotations.ScreenScope
+import com.kumela.runn.di.common.ScreenModule
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
 
 @ScreenScope
-@Subcomponent(modules = [SplashModule::class])
+@Subcomponent(modules = [ScreenModule::class, SplashModule::class])
 interface SplashScreenComponent : AndroidInjector<SplashController> {
 
     @Subcomponent.Builder

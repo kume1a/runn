@@ -1,5 +1,6 @@
 package com.kumela.mvx.mvp.core
 
+import android.content.Intent
 import androidx.annotation.UiThread
 
 /**
@@ -28,4 +29,10 @@ interface MvpPresenter<V: MvpView> {
 
     @UiThread
     fun onViewBound() {}
+
+    @UiThread
+    fun onRequestPermissionResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
+
+    @UiThread
+    fun onResult(requestCode: Int, resultCode: Int, data: Intent?)
 }
