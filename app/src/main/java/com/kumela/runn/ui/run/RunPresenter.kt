@@ -7,6 +7,7 @@ import com.kumela.runn.data.managers.RequestingLocationManager
 
 class RunPresenter(
     private val requestingLocationManager: RequestingLocationManager,
+    private val runLocationServiceController: RunLocationServiceController
 ) : MvpBasePresenter<RunContract.View>(), RunContract.Presenter {
 
     override fun onViewBound() {
@@ -19,7 +20,7 @@ class RunPresenter(
     override fun onRequestPermissionResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionResult(requestCode, permissions, grantResults)
         if (requestCode == RC_PERMISSION_LOCATION) {
-            if (grantResults.getOrNull(0) == PackageManager.PERMISSION_GRANTED) view?.startService()
+            if (grantResults.getOrNull(0) == PackageManager.PERMISSION_GRANTED) runLocationServiceController.startService()
             else view?.showPermissionSettingsRouteView()
         }
     }
@@ -27,7 +28,7 @@ class RunPresenter(
     override fun onStartClicked() {
         ifViewAttached { view ->
             if (view.isLocationPermissionGranted()) {
-                view.startService()
+                runLocationServiceController.startService()
             } else {
                 if (view.shouldShowLocationPermissionRationale()) {
                     view.showPermissionRationale(RC_PERMISSION_LOCATION)
@@ -39,7 +40,7 @@ class RunPresenter(
     }
 
     override fun onStopClicked() {
-        view?.endService()
+        runLocationServiceController.endService()
     }
 
     companion object {

@@ -35,7 +35,7 @@ abstract class BaseController<V : MvpView, P : MvpPresenter<V>> : MvpBaseControl
             injected = true
         }
         for (lifecycleTask in lifecycleTasks) {
-            lifecycleTask.onContextAvailable(context)
+            lifecycleTask.onContextAvailable(context, activity)
         }
         super.onContextAvailable(context)
     }

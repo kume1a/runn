@@ -6,7 +6,7 @@ import android.view.View
 
 abstract class ScreenLifecycleTask {
 
-    open fun onContextAvailable(context: Context) {}
+    open fun onContextAvailable(context: Context, activity: Activity?) {}
 
     open fun onEnterScope(view: View?) {}
 

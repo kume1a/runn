@@ -52,7 +52,7 @@ class AppNotificationManager @Inject constructor(private val notificationManager
             .setContentTitle(contentTitle)
             .setOngoing(true)
             .setPriority(importance)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setWhen(System.currentTimeMillis())
 
         return builder.build()
