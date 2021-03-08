@@ -2,26 +2,28 @@ package com.kumela.runn.ui.run
 
 import android.content.pm.PackageManager
 import com.kumela.mvx.mvp.MvpBasePresenter
-import com.kumela.runn.data.managers.RequestingLocationManager
 
 
 class RunPresenter(
-    private val requestingLocationManager: RequestingLocationManager,
-    private val runLocationServiceController: RunLocationServiceController
+    private val runLocationServiceController: RunLocationServiceController,
 ) : MvpBasePresenter<RunContract.View>(), RunContract.Presenter {
 
     override fun onViewBound() {
         super<MvpBasePresenter>.onViewBound()
-        if (requestingLocationManager.requestingLocationUpdates() && view?.isLocationPermissionGranted() == false) {
+        if (view?.isLocationPermissionGranted() == false) {
             view?.requestLocationPermissions(RC_PERMISSION_LOCATION)
+        } else {
+            view?.showLocationPrompt()
         }
     }
 
     override fun onRequestPermissionResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionResult(requestCode, permissions, grantResults)
         if (requestCode == RC_PERMISSION_LOCATION) {
-            if (grantResults.getOrNull(0) == PackageManager.PERMISSION_GRANTED) runLocationServiceController.startService()
-            else view?.showPermissionSettingsRouteView()
+            if (grantResults.getOrNull(0) == PackageManager.PERMISSION_GRANTED) {
+                runLocationServiceController.startService()
+                view?.showLocationPrompt()
+            } else view?.showPermissionSettingsRouteView()
         }
     }
 

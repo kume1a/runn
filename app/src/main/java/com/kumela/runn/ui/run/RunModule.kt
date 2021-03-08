@@ -1,7 +1,6 @@
 package com.kumela.runn.ui.run
 
 import com.kumela.runn.core.lifecycle.ScreenLifecycleTask
-import com.kumela.runn.data.managers.RequestingLocationManager
 import com.kumela.runn.di.annotations.ScreenScope
 import dagger.Binds
 import dagger.Module
@@ -20,9 +19,7 @@ abstract class RunModule {
         @JvmStatic
         @Provides
         @ScreenScope
-        fun provideRunPresenter(
-            requestingLocationManager: RequestingLocationManager,
-            runLocationServiceController: RunLocationServiceController,
-        ): RunContract.Presenter = RunPresenter(requestingLocationManager, runLocationServiceController)
+        fun provideRunPresenter(runLocationServiceController: RunLocationServiceController, ): RunContract.Presenter =
+            RunPresenter(runLocationServiceController)
     }
 }

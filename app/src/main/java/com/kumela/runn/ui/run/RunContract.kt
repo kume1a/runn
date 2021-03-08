@@ -12,6 +12,7 @@ interface RunContract {
         fun requestLocationPermissions(requestCode: Int)
         fun showPermissionRationale(requestCode: Int)
         fun showPermissionSettingsRouteView()
+        fun showLocationPrompt()
     }
 
     interface Presenter: MvpPresenter<View> {

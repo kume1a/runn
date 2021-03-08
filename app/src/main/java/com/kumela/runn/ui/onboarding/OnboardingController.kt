@@ -2,6 +2,7 @@ package com.kumela.runn.ui.onboarding
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.NumberPicker
@@ -48,8 +49,8 @@ class OnboardingController :
     @BindView(R.id.progress_indicator) lateinit var progressIndicator: ProgressBar
     @BindView(R.id.view_indicator_background) lateinit var viewIndicatorBackground: View
 
-    override fun onViewBound(view: View) {
-        super.onViewBound(view)
+    override fun onViewBound(view: View, savedViewState: Bundle?) {
+        super.onViewBound(view, savedViewState)
 
         buttonBack.setOnClickListener { presenter.onBackClicked() }
         buttonNext.setOnClickListener { presenter.onNextClicked() }

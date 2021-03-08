@@ -54,6 +54,7 @@ ext {
 //    chartsVersion = 'v3.1.0'
 
     locationVersion = '18.0.0'
+    mapsVersion = '17.0.0'
 }
 
 task clean(type: Delete) {

@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'com.google.secrets_gradle_plugin' version '0.5'
 }
 
 android {
@@ -84,4 +85,5 @@ dependencies {
 //    implementation "com.github.PhilJay:MPAndroidChart:$chartsVersion"
 
     implementation "com.google.android.gms:play-services-location:$locationVersion"
+    implementation "com.google.android.gms:play-services-maps:$mapsVersion"
 }

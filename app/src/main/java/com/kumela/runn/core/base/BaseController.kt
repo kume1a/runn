@@ -47,7 +47,7 @@ abstract class BaseController<V : MvpView, P : MvpPresenter<V>> : MvpBaseControl
     ): View {
         val view = inflater.inflate(layoutRes, container, false)
         unbinder = ButterKnife.bind(this, view)
-        onViewBound(view)
+        onViewBound(view, savedViewState)
         presenter.onViewBound()
         return view
     }
@@ -55,7 +55,7 @@ abstract class BaseController<V : MvpView, P : MvpPresenter<V>> : MvpBaseControl
     @get:LayoutRes
     abstract val layoutRes: Int
 
-    protected open fun onViewBound(view: View) {}
+    protected open fun onViewBound(view: View, savedViewState: Bundle?) {}
 
     override fun onDestroyView(view: View) {
         super.onDestroyView(view)
