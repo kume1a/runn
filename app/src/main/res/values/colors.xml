@@ -17,4 +17,5 @@
     <color name="accent">#18ffff</color>
     <color name="accent_variant">#FD724C</color>
     <color name="overlay">#40000000</color>
+    <color name="text_color_on_light">#20202F</color>
 </resources>

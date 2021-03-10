@@ -6,12 +6,20 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.location.Location
 import android.os.*
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.location.*
+import com.google.android.gms.maps.model.LatLng
 import com.kumela.runn.BuildConfig
 import com.kumela.runn.core.base.BaseService
+import com.kumela.runn.core.events.LocationEvent
+import com.kumela.runn.core.events.RunSessionInfoEvent
+import com.kumela.runn.core.events.RunSessionTick
 import com.kumela.runn.data.managers.RequestingLocationManager
+import com.kumela.runn.helpers.SimpleTimer
+import com.kumela.runn.helpers.calculators.DistanceCalculator
+import com.kumela.runn.helpers.calculators.SpeedCalculator
+import com.kumela.runn.models.Duration
 import com.kumela.runn.notifications.AppNotificationManager
+import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -21,6 +29,8 @@ class LocationUpdateService : BaseService() {
 
     @Inject lateinit var requestingLocationManager: RequestingLocationManager
     @Inject lateinit var appNotificationManager: AppNotificationManager
+    @Inject lateinit var distanceCalculator: DistanceCalculator
+    @Inject lateinit var speedCalculator: SpeedCalculator
 
     private val binder = LocalBinder()
     private var changingConfigurations = false
@@ -29,7 +39,16 @@ class LocationUpdateService : BaseService() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
     private lateinit var serviceHandler: Handler
+
     private var location: Location? = null
+    private var distance: Double = 0.0
+    private var lastTimestamp: Long = System.currentTimeMillis()
+    private val speeds = mutableListOf<Double>()
+    private val timer = object: SimpleTimer() {
+        override fun onTick(duration: Duration) {
+            EventBus.getDefault().post(RunSessionTick(duration))
+        }
+    }
 
     override fun onCreate() {
         injector.inject(this)
@@ -111,11 +130,13 @@ class LocationUpdateService : BaseService() {
     }
 
     fun requestLocationUpdates() {
+        timer.resume()
         requestingLocationManager.setRequestingLocationUpdates(true)
         startService(Intent(applicationContext, LocationUpdateService::class.java))
+        location = null
         try {
             @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
+            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, serviceHandler.looper)
         } catch (e: SecurityException) {
             requestingLocationManager.setRequestingLocationUpdates(false)
             Timber.e(e)
@@ -123,6 +144,7 @@ class LocationUpdateService : BaseService() {
     }
 
     fun removeLocationUpdates() {
+        timer.pause()
         try {
             fusedLocationClient.removeLocationUpdates(locationCallback)
             requestingLocationManager.setRequestingLocationUpdates(false)
@@ -132,13 +154,25 @@ class LocationUpdateService : BaseService() {
         }
     }
 
-    private fun onNewLocation(lastLocation: Location) {
-        location = lastLocation
+    private fun onNewLocation(currentLocation: Location) {
+        location?.let { loc ->
+            distance += distanceCalculator.calculateDistance(loc, currentLocation)
 
-        val intent = Intent(ACTION_BROADCAST).also { intent ->
-            intent.putExtra(EXTRA_LOCATION, lastLocation)
+            val lastLatLng = LatLng(loc.latitude, loc.longitude)
+            val currentLatLng = LatLng(currentLocation.latitude, currentLocation.longitude)
+            val bearing = currentLocation.bearing
+            val timeInMillis = System.currentTimeMillis() - lastTimestamp
+            val speed = speedCalculator.calculateSpeed(lastLatLng, currentLatLng, timeInMillis)
+
+            speeds.add(speed)
+
+            val averageSpeed = speeds.average()
+
+            EventBus.getDefault().post(LocationEvent(lastLatLng, currentLatLng, bearing))
+            EventBus.getDefault().post(RunSessionInfoEvent(distance, speed, averageSpeed, timer.passedTime))
         }
-        LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
+        location = currentLocation
+        lastTimestamp = System.currentTimeMillis()
 
         if (serviceIsRunningInForeground(this)) {
             appNotificationManager.sendLocationNotification(this, location.toString(), "title")
@@ -163,10 +197,12 @@ class LocationUpdateService : BaseService() {
     }
 
     companion object {
-        private const val UPDATE_INTERVAL = 2500L
+        private const val UPDATE_INTERVAL = 3000L
         private const val UPDATE_INTERVAL_FASTEST = UPDATE_INTERVAL / 2
 
         const val ACTION_BROADCAST = "${BuildConfig.APPLICATION_ID}.broadcast"
+
         const val EXTRA_LOCATION = "${BuildConfig.APPLICATION_ID}.location"
+        const val EXTRA_DISTANCE = "${BuildConfig.APPLICATION_ID}.distance"
     }
 }

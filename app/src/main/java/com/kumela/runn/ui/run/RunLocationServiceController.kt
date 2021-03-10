@@ -8,6 +8,7 @@ import com.kumela.runn.core.lifecycle.ScreenLifecycleTask
 import com.kumela.runn.di.annotations.ScreenScope
 import com.kumela.runn.services.LocationBroadcastReceiver
 import com.kumela.runn.services.LocationUpdateService
+import timber.log.Timber
 import javax.inject.Inject
 
 @ScreenScope
@@ -16,6 +17,8 @@ class RunLocationServiceController @Inject constructor() : ScreenLifecycleTask()
     private lateinit var receiver: LocationBroadcastReceiver
     private var bound = false
     private var service: LocationUpdateService? = null
+
+    // TODO: 09/03/21 delete broadcast receiver if event bus implementation works
 
     private val mServiceConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
@@ -60,11 +63,15 @@ class RunLocationServiceController @Inject constructor() : ScreenLifecycleTask()
         super.onActivityStopped(activity)
     }
 
-    fun startService() {
+    fun requestLocationUpdates() {
         service?.requestLocationUpdates()
     }
 
-    fun endService() {
+    fun stopLocationUpdates() {
         service?.removeLocationUpdates()
+    }
+
+    fun stopService() {
+        service?.stopSelf()
     }
 }

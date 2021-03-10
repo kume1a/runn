@@ -40,7 +40,7 @@ abstract class MvpBasePresenter<V : MvpView> : MvpPresenter<V> {
     }
 
     final override fun detachView() {
-        onViewDetaching()
+        onViewDetached()
         if (viewRef != null) {
             viewRef!!.clear()
             viewRef = null
@@ -49,7 +49,7 @@ abstract class MvpBasePresenter<V : MvpView> : MvpPresenter<V> {
     }
 
     override fun onViewAttached() {}
-    override fun onViewDetaching() {}
+    override fun onViewDetached() {}
 
     override fun onRequestPermissionResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {}
     override fun onResult(requestCode: Int, resultCode: Int, data: Intent?) {}

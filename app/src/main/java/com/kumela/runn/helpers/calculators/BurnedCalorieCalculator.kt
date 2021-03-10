@@ -1,32 +1,33 @@
-package com.kumela.runn.data.utils
+package com.kumela.runn.helpers.calculators
 
 import androidx.annotation.FloatRange
+import javax.inject.Inject
 
-class BurnedCalorieCalculator {
+class BurnedCalorieCalculator @Inject constructor() {
 
     fun calculateCaloriesBurned(
         @FloatRange(from = 0.0) weightInKgs: Float,
-        @FloatRange(from = 0.0) phase: Float,
+        @FloatRange(from = 0.0) pace: Float,
         @FloatRange(from = 0.0) timeInMinutes: Float,
     ): Float {
-        val met = getMetForPhase(phase)
+        val met = getMetForPhase(pace)
         val caloriesPerMinute = (met * weightInKgs * 3.5f) / 200f
-        
+
         return caloriesPerMinute * timeInMinutes
     }
 
-    private fun getMetForPhase(@FloatRange(from = 0.0) phase: Float): Float {
+    private fun getMetForPhase(@FloatRange(from = 0.0) pace: Float): Float {
         return when {
-            phase >= 0f && phase < 6.5f -> MET_6_5_KMH
-            phase >= 6.5f && phase < 8f -> MET_8_KMH
-            phase >= 8f && phase < 9.6f -> MET_9_6_KMH
-            phase >= 9.6f && phase < 11.2f -> MET_11_2_KMH
-            phase >= 11.2f && phase < 12.9f -> MET_12_9_KMH
-            phase >= 12.9f && phase < 14.5f -> MET_14_5_KMH
-            phase >= 14.5f && phase < 16.1f -> MET_16_1_KMH
-            phase >= 16.1f && phase < 17.7f -> MET_17_7_KMH
-            phase >= 17.7f && phase < 19.3f -> MET_19_3_KMH
-            phase >= 19.3f && phase < 22.5f -> MET_20_9_KMH
+            pace >= 0f && pace < 6.5f -> MET_6_5_KMH
+            pace >= 6.5f && pace < 8f -> MET_8_KMH
+            pace >= 8f && pace < 9.6f -> MET_9_6_KMH
+            pace >= 9.6f && pace < 11.2f -> MET_11_2_KMH
+            pace >= 11.2f && pace < 12.9f -> MET_12_9_KMH
+            pace >= 12.9f && pace < 14.5f -> MET_14_5_KMH
+            pace >= 14.5f && pace < 16.1f -> MET_16_1_KMH
+            pace >= 16.1f && pace < 17.7f -> MET_17_7_KMH
+            pace >= 17.7f && pace < 19.3f -> MET_19_3_KMH
+            pace >= 19.3f && pace < 22.5f -> MET_20_9_KMH
             else -> MET_22_5_KMH
         }
     }

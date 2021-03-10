@@ -55,6 +55,8 @@ ext {
 
     locationVersion = '18.0.0'
     mapsVersion = '17.0.0'
+
+    eventBusVersion = '3.2.0'
 }
 
 task clean(type: Delete) {

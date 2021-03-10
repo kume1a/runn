@@ -15,8 +15,8 @@ abstract class SavedStatePresenter<V : MvpView, S>(initialState: S) :
         onRestoreState(state)
     }
 
-    override fun onViewDetaching() {
-        super.onViewDetaching()
+    override fun onViewDetached() {
+        super.onViewDetached()
         state = latestState()
     }
 }

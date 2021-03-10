@@ -2,12 +2,13 @@ package com.kumela.runn.core.base
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.LayoutRes
-import androidx.annotation.StringRes
+import androidx.annotation.*
+import androidx.core.content.ContextCompat
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.bluelinelabs.conductor.ControllerChangeHandler
@@ -111,5 +112,11 @@ abstract class BaseController<V : MvpView, P : MvpPresenter<V>> : MvpBaseControl
         }
     }
 
-    fun getString(@StringRes stringRes: Int): String = view?.context?.getString(stringRes) ?: ""
+    protected fun getString(@StringRes stringRes: Int): String = view?.context?.getString(stringRes) ?: ""
+
+    @Dimension
+    protected fun getDimension(@DimenRes dimenRes: Int): Float = view?.context?.resources?.getDimension(dimenRes) ?: 0f
+
+    protected fun getDrawable(@DrawableRes drawableRes: Int): Drawable? =
+        if (view?.context != null) ContextCompat.getDrawable(view!!.context, drawableRes) else null
 }

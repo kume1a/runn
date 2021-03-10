@@ -25,7 +25,7 @@ interface MvpPresenter<V: MvpView> {
     fun onViewAttached()
 
     @UiThread
-    fun onViewDetaching()
+    fun onViewDetached()
 
     @UiThread
     fun onViewBound() {}
