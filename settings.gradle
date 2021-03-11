@@ -1,3 +1,4 @@
+include ':dialogcontroller'
 include ':mvx'
 include ':views'
 include ':app'

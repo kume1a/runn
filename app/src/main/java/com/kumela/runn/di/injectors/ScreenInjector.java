@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.annotation.NonNull;
 
 import com.bluelinelabs.conductor.Controller;
+import com.kumela.dialogcontroller.DialogController;
 import com.kumela.runn.core.base.BaseActivity;
 import com.kumela.runn.core.base.BaseController;
 import com.kumela.runn.di.annotations.ActivityScope;
@@ -49,7 +50,7 @@ public class ScreenInjector {
     }
 
     void clear(Controller controller) {
-        if (!(controller instanceof BaseController)) {
+        if (!(controller instanceof BaseController) && !(controller instanceof DialogController)) {
             throw new IllegalArgumentException("controller must extend " + BaseController.class.getSimpleName());
         }
 

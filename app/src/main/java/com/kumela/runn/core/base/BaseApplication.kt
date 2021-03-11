@@ -6,6 +6,7 @@ import com.kumela.runn.di.app.AppComponent
 import com.kumela.runn.di.app.AppModule
 import com.kumela.runn.di.app.DaggerAppComponent
 import com.kumela.runn.di.injectors.ActivityInjector
+import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import javax.inject.Inject
@@ -21,6 +22,10 @@ class BaseApplication : Application() {
 
         if (BuildConfig.DEBUG) {
             Timber.plant(DebugTree())
+        }
+
+        RxJavaPlugins.setErrorHandler { throwable ->
+            Timber.e(throwable)
         }
 
         appComponent = createAppComponent()
