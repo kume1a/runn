@@ -43,14 +43,17 @@ class LocationUpdateService : BaseService() {
     private lateinit var serviceHandler: Handler
 
     private var location: Location? = null
-    private var distance: Double = 0.0
-    private var lastTimestamp: Long = System.currentTimeMillis()
-    private val speeds = mutableListOf<Double>()
+    val locationPoints = mutableListOf<LatLng>()
+    var distance: Double = 0.0
+        private set
+    val speeds = mutableListOf<Double>()
     private val timer = object : SimpleTimer() {
         override fun onTick(duration: Duration) {
             EventBus.getDefault().post(RunSessionTick(duration))
         }
     }
+    val passedTime: Long get() = timer.passedTime
+    private var lastTimestamp: Long = System.currentTimeMillis()
 
     override fun onCreate() {
         injector.inject(this)
@@ -170,6 +173,7 @@ class LocationUpdateService : BaseService() {
             val speed = speedCalculator.calculateSpeed(lastLatLng, currentLatLng, timeInMillis)
 
             speeds.add(speed)
+            locationPoints.add(currentLatLng)
 
             val averageSpeed = speeds.average()
 
@@ -207,10 +211,5 @@ class LocationUpdateService : BaseService() {
     companion object {
         private const val UPDATE_INTERVAL = 3000L
         private const val UPDATE_INTERVAL_FASTEST = UPDATE_INTERVAL / 2
-
-        const val ACTION_BROADCAST = "${BuildConfig.APPLICATION_ID}.broadcast"
-
-        const val EXTRA_LOCATION = "${BuildConfig.APPLICATION_ID}.location"
-        const val EXTRA_DISTANCE = "${BuildConfig.APPLICATION_ID}.distance"
     }
 }

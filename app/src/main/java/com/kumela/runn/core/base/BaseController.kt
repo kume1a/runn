@@ -22,6 +22,8 @@ import javax.inject.Inject
 
 abstract class BaseController<V : MvpView, P : MvpPresenter<V>> : MvpBaseController<V, P> {
 
+    protected val context: Context? get() = view?.context
+
     private var injected = false
     private var unbinder: Unbinder? = null
 
@@ -112,11 +114,15 @@ abstract class BaseController<V : MvpView, P : MvpPresenter<V>> : MvpBaseControl
         }
     }
 
-    protected fun getString(@StringRes stringRes: Int): String = view?.context?.getString(stringRes) ?: ""
+    protected fun getString(@StringRes stringRes: Int): String = context?.getString(stringRes) ?: ""
 
     @Dimension
-    protected fun getDimension(@DimenRes dimenRes: Int): Float = view?.context?.resources?.getDimension(dimenRes) ?: 0f
+    protected fun getDimension(@DimenRes dimenRes: Int): Float = context?.resources?.getDimension(dimenRes) ?: 0f
+
+    @ColorInt
+    protected fun getColor(@ColorRes coloreRes: Int): Int =
+        if (context != null) ContextCompat.getColor(context!!, coloreRes) else 0
 
     protected fun getDrawable(@DrawableRes drawableRes: Int): Drawable? =
-        if (view?.context != null) ContextCompat.getDrawable(view!!.context, drawableRes) else null
+        if (context != null) ContextCompat.getDrawable(context!!, drawableRes) else null
 }

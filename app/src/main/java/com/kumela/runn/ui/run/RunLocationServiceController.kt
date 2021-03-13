@@ -3,22 +3,17 @@ package com.kumela.runn.ui.run
 import android.app.Activity
 import android.content.*
 import android.os.IBinder
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.android.gms.maps.model.LatLng
 import com.kumela.runn.core.lifecycle.ScreenLifecycleTask
 import com.kumela.runn.di.annotations.ScreenScope
-import com.kumela.runn.services.LocationBroadcastReceiver
 import com.kumela.runn.services.LocationUpdateService
-import timber.log.Timber
 import javax.inject.Inject
 
 @ScreenScope
 class RunLocationServiceController @Inject constructor() : ScreenLifecycleTask() {
 
-    private lateinit var receiver: LocationBroadcastReceiver
     private var bound = false
     private var service: LocationUpdateService? = null
-
-    // TODO: 09/03/21 delete broadcast receiver if event bus implementation works
 
     private val mServiceConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
@@ -36,23 +31,12 @@ class RunLocationServiceController @Inject constructor() : ScreenLifecycleTask()
     override fun onContextAvailable(context: Context, activity: Activity?) {
         super.onContextAvailable(context, activity)
 
-        receiver = LocationBroadcastReceiver()
         activity?.bindService(Intent(activity, LocationUpdateService::class.java), mServiceConnection, Context.BIND_AUTO_CREATE)
     }
 
     override fun onActivityStarted(activity: Activity) {
         super.onActivityStarted(activity)
         activity.bindService(Intent(activity, LocationUpdateService::class.java), mServiceConnection, Context.BIND_AUTO_CREATE)
-    }
-
-    override fun onActivityResumed(activity: Activity) {
-        super.onActivityResumed(activity)
-        LocalBroadcastManager.getInstance(activity).registerReceiver(receiver, IntentFilter(LocationUpdateService.ACTION_BROADCAST))
-    }
-
-    override fun onActivityPaused(activity: Activity) {
-        LocalBroadcastManager.getInstance(activity).unregisterReceiver(receiver)
-        super.onActivityPaused(activity)
     }
 
     override fun onActivityStopped(activity: Activity) {
@@ -74,4 +58,9 @@ class RunLocationServiceController @Inject constructor() : ScreenLifecycleTask()
     fun stopService() {
         service?.stopSelf()
     }
+
+    fun getLocationPoints(): List<LatLng>? = service?.locationPoints
+    fun getSpeeds(): List<Double>? = service?.speeds
+    fun getDistance(): Double? = service?.distance
+    fun getDurationInMillis(): Long? = service?.passedTime
 }

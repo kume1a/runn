@@ -5,7 +5,7 @@ import android.app.Activity;
 import androidx.annotation.NonNull;
 
 import com.bluelinelabs.conductor.Controller;
-import com.kumela.dialogcontroller.DialogController;
+import com.hippo.conductor.dialog.DialogController;
 import com.kumela.runn.core.base.BaseActivity;
 import com.kumela.runn.core.base.BaseController;
 import com.kumela.runn.di.annotations.ActivityScope;

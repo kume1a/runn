@@ -1,15 +1,20 @@
-package com.kumela.dialogcontroller.dialogs
+package com.kumela.runn.ui.dialogs.core
 
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.annotation.StyleRes
-import com.kumela.dialogcontroller.DialogController
-import com.kumela.dialogcontroller.R
+import butterknife.BindView
+import com.kumela.runn.R
+import com.kumela.runn.core.base.BaseDialog
 
-class AlertDialog(@StyleRes themeId: Int = 0) : DialogController(themeId) {
+class AlertDialog : BaseDialog() {
+
+    override val layoutRes: Int = R.layout.dialog_alert
+
+    @BindView(R.id.text_title) lateinit var textTitle: TextView
+    @BindView(R.id.text_message) lateinit var textMessage: TextView
+    @BindView(R.id.button_positive) lateinit var buttonPositive: Button
+    @BindView(R.id.button_negative) lateinit var buttonNegative: Button
 
     private var title: String = ""
     private var message: String = ""
@@ -19,32 +24,23 @@ class AlertDialog(@StyleRes themeId: Int = 0) : DialogController(themeId) {
     private var onPositiveButtonClick: (() -> Unit)? = null
     private var onNegativeButtonClick: (() -> Unit)? = null
 
-    override fun createContentView(inflater: LayoutInflater, container: ViewGroup): View {
-        val view = inflater.inflate(R.layout.alert_dialog, container, false)
-
-        val textTitle = view.findViewById<TextView>(R.id.text_title)
-        val textMessage = view.findViewById<TextView>(R.id.text_message)
-        val buttonPositive = view.findViewById<Button>(R.id.button_positive)
-        val buttonNegative = view.findViewById<Button>(R.id.button_negative)
-
+    override fun onViewBound(view: View) {
         textTitle.text = title
         textMessage.text = message
 
-        if(onPositiveButtonClick != null) {
+        if (onPositiveButtonClick != null) {
             buttonPositive.text = positiveButtonText
             buttonPositive.setOnClickListener { onPositiveButtonClick!!.invoke() }
         } else {
             buttonPositive.visibility = View.GONE
         }
 
-        if(onNegativeButtonClick != null) {
+        if (onNegativeButtonClick != null) {
             buttonNegative.text = negativeButtonText
             buttonNegative.setOnClickListener { onNegativeButtonClick!!.invoke() }
         } else {
             buttonNegative.visibility = View.GONE
         }
-
-        return view
     }
 
     class Builder {
@@ -79,7 +75,7 @@ class AlertDialog(@StyleRes themeId: Int = 0) : DialogController(themeId) {
         }
 
         fun build(): AlertDialog {
-            val dialog =  AlertDialog()
+            val dialog = AlertDialog()
 
             dialog.title = title
             dialog.message = message

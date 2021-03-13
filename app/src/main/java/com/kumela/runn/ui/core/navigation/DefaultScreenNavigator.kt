@@ -1,19 +1,19 @@
 package com.kumela.runn.ui.core.navigation
 
+import android.os.Handler
 import android.os.Looper
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
-import com.kumela.dialogcontroller.dialogs.AlertDialog
-import com.kumela.dialogcontroller.pushDialog
+import com.hippo.conductor.dialog.DialogController
+import com.hippo.conductor.dialog.SimpleDialogChangeHandler
 import com.kumela.runn.ui.home.HomeController
 import com.kumela.runn.ui.onboarding.OnboardingController
 import com.kumela.runn.ui.plans.PlansController
 import com.kumela.runn.ui.profile.ProfileController
 import com.kumela.runn.ui.run.RunController
 import com.kumela.runn.ui.statistics.StatisticsController
-import android.os.Handler
 import javax.inject.Inject
 
 class DefaultScreenNavigator @Inject constructor() : ScreenNavigator {
@@ -29,6 +29,14 @@ class DefaultScreenNavigator @Inject constructor() : ScreenNavigator {
     override fun popFromDialog() {
         pop()
         handler.postDelayed({pop()}, 200)
+    }
+
+    override fun showDialog(dialog: DialogController) {
+        router?.pushController(
+            RouterTransaction.with(dialog)
+                .pushChangeHandler(SimpleDialogChangeHandler())
+                .popChangeHandler(SimpleDialogChangeHandler())
+        )
     }
 
     override fun initializeWithRouter(router: Router, initialScreen: Controller) {
@@ -87,9 +95,5 @@ class DefaultScreenNavigator @Inject constructor() : ScreenNavigator {
                 .pushChangeHandler(fadeChangeHandler)
                 .popChangeHandler(fadeChangeHandler)
         )
-    }
-
-    override fun showAlertDialog(alertDialog: AlertDialog) {
-        router?.pushDialog(alertDialog)
     }
 }

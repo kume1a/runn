@@ -12,7 +12,6 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
 import androidx.core.view.marginBottom
 import androidx.core.view.setPadding
 import butterknife.BindView
@@ -22,10 +21,7 @@ import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.*
 import com.google.android.material.snackbar.Snackbar
 import com.kumela.runn.BuildConfig
 import com.kumela.runn.R
@@ -52,7 +48,6 @@ class RunController : BaseController<RunContract.View, RunContract.Presenter>(),
     @BindView(R.id.text_pace) lateinit var textPace: TextView
     @BindView(R.id.text_calories) lateinit var textCalories: TextView
     @BindView(R.id.button_start_pause) lateinit var buttonStartPause: TextView
-    @BindView(R.id.button_lock) lateinit var buttonLock: ImageButton
     @BindView(R.id.view_lock) lateinit var viewLock: View
     @BindView(R.id.button_resume) lateinit var buttonResume: ImageButton
     @BindView(R.id.text_resume) lateinit var textResume: TextView
@@ -70,7 +65,6 @@ class RunController : BaseController<RunContract.View, RunContract.Presenter>(),
         buttonStartPause.setOnClickListener { presenter.onStartPauseClicked() }
         buttonResume.setOnClickListener { presenter.onResumeClicked() }
         buttonStop.setOnClickListener { presenter.onStopClicked() }
-        buttonLock.setOnClickListener { presenter.onLockClicked() }
 
         mapView.getMapAsync { googleMap ->
             map = googleMap
@@ -152,7 +146,7 @@ class RunController : BaseController<RunContract.View, RunContract.Presenter>(),
     }
 
     override fun isLocationEnabled(): Boolean {
-        if(activity == null) return false
+        if (activity == null) return false
 
         val locationService = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationService.isProviderEnabled(LocationManager.GPS_PROVIDER)
@@ -211,8 +205,12 @@ class RunController : BaseController<RunContract.View, RunContract.Presenter>(),
     override fun changeStartToPause() {
         buttonStartPause.post {
             buttonStartPause.text = getString(R.string.pause)
-            buttonStartPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0,0,0)
+            buttonStartPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0)
         }
+    }
+
+    override fun showBlockingView() {
+        viewLock.fadeIn()
     }
 
     override fun showResumeStop() {
@@ -233,7 +231,6 @@ class RunController : BaseController<RunContract.View, RunContract.Presenter>(),
 
     override fun showBottomButtons() {
         buttonStartPause.translate(0f)
-        buttonLock.translate(0f)
         cardContent.translate(0f)
     }
 
@@ -241,12 +238,11 @@ class RunController : BaseController<RunContract.View, RunContract.Presenter>(),
         val buttonTranslation = buttonStartPause.height.toFloat() + buttonStartPause.marginBottom
         val cardTranslation = buttonTranslation / 2f
         buttonStartPause.translate(buttonTranslation)
-        buttonLock.translate(buttonTranslation)
         cardContent.translate(cardTranslation)
     }
 
     override fun drawLine(a: LatLng, b: LatLng) {
-        map?.addPolyline(PolylineOptions().add(a).add(b).color(ContextCompat.getColor(view!!.context, R.color.accent)))
+        map?.addPolyline(PolylineOptions().add(a).add(b).color(getColor(R.color.accent)))
     }
 
     override fun moveCameraTo(position: LatLng, bearing: Float) {
@@ -257,6 +253,31 @@ class RunController : BaseController<RunContract.View, RunContract.Presenter>(),
             .build()
 
         map?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+    }
+
+    override fun takeMapSnapshot(locationPoints: List<LatLng>) {
+        @SuppressLint("MissingPermission")
+        map?.isMyLocationEnabled = false
+        map?.snapshot { bitmap -> presenter.onMapSnapshot(bitmap) }
+    }
+
+    override fun normalizeCamera(locationPoints: List<LatLng>) {
+        val builder = LatLngBounds.Builder()
+        locationPoints.forEach { point -> builder.include(point) }
+        val bounds = builder.build()
+        val update = CameraUpdateFactory.newLatLngBounds(bounds, 100)
+        map?.moveCamera(update)
+    }
+
+    override fun plotAllLines(locationPoints: List<LatLng>) {
+        val polyLines = PolylineOptions()
+        locationPoints.forEach { point -> polyLines.add(point) }
+        polyLines.color(getColor(R.color.accent))
+        map?.addPolyline(polyLines)
+    }
+
+    override fun clearMap() {
+        map?.clear()
     }
 
     companion object {

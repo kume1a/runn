@@ -1,5 +1,6 @@
 package com.kumela.runn.ui.run
 
+import android.graphics.Bitmap
 import com.google.android.gms.maps.model.LatLng
 import com.kumela.mvx.mvp.core.MvpPresenter
 import com.kumela.mvx.mvp.core.MvpView
@@ -28,6 +29,8 @@ interface RunContract {
 
         fun changeStartToPause()
 
+        fun showBlockingView()
+
         fun showResumeStop()
         fun hideResumeStop()
         fun showBottomButtons()
@@ -35,6 +38,10 @@ interface RunContract {
 
         fun drawLine(a: LatLng, b: LatLng)
         fun moveCameraTo(position: LatLng, bearing: Float)
+        fun takeMapSnapshot(locationPoints: List<LatLng>)
+        fun normalizeCamera(locationPoints: List<LatLng>)
+        fun plotAllLines(locationPoints: List<LatLng>)
+        fun clearMap()
     }
 
     interface Presenter: MvpPresenter<View> {
@@ -42,6 +49,7 @@ interface RunContract {
         fun onStartPauseClicked()
         fun onResumeClicked()
         fun onStopClicked()
-        fun onLockClicked()
+
+        fun onMapSnapshot(bitmap: Bitmap)
     }
 }

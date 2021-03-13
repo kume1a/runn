@@ -2,11 +2,13 @@ package com.kumela.runn.ui.core.navigation
 
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.Router
-import com.kumela.dialogcontroller.dialogs.AlertDialog
+import com.hippo.conductor.dialog.DialogController
 
 interface ScreenNavigator {
     fun pop(): Boolean
     fun popFromDialog()
+
+    fun showDialog(dialog: DialogController)
 
     fun initializeWithRouter(router: Router, initialScreen: Controller)
     fun dispose()
@@ -17,6 +19,4 @@ interface ScreenNavigator {
     fun toStatistics()
     fun toProfile()
     fun toRun()
-
-    fun showAlertDialog(alertDialog: AlertDialog)
 }

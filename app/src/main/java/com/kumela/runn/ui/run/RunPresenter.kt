@@ -1,7 +1,7 @@
 package com.kumela.runn.ui.run
 
 import android.content.pm.PackageManager
-import com.kumela.dialogcontroller.dialogs.AlertDialog
+import android.graphics.Bitmap
 import com.kumela.mvx.mvp.SavedStatePresenter
 import com.kumela.runn.core.events.LocationEvent
 import com.kumela.runn.core.events.RunSessionInfoEvent
@@ -10,7 +10,10 @@ import com.kumela.runn.core.roundToSingleDecimal
 import com.kumela.runn.data.db.user.UserService
 import com.kumela.runn.helpers.calculators.BurnedCalorieCalculator
 import com.kumela.runn.ui.core.navigation.ScreenNavigator
+import com.kumela.runn.ui.dialogs.StopRunPromptDialog
+import com.kumela.runn.ui.dialogs.core.AlertDialog
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -93,9 +96,14 @@ class RunPresenter(
                 }
                 .subscribe { calories ->
                     ifViewAttached { view ->
-                        view.setCalories(calories.roundToSingleDecimal().toString())
-                        view.setPace(event.speedInKmH.roundToSingleDecimal().toString())
-                        view.setDistance(event.fullDistanceInKm.roundToSingleDecimal().toString())
+                        if (calories.isFinite())
+                            view.setCalories(calories.roundToSingleDecimal().toString())
+
+                        if (event.speedInKmH.isFinite())
+                            view.setPace(event.speedInKmH.roundToSingleDecimal().toString())
+
+                        if (event.fullDistanceInKm.isFinite())
+                            view.setDistance(event.fullDistanceInKm.roundToSingleDecimal().toString())
                     }
                 }
         )
@@ -104,6 +112,38 @@ class RunPresenter(
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onRunSessionTick(event: RunSessionTick) {
         view?.setTime(event.duration.format())
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onStopRunPromptEvent(event: StopRunPromptDialog.Event) {
+        when (event) {
+            StopRunPromptDialog.Event.CLOSE -> screenNavigator.pop()
+            StopRunPromptDialog.Event.FINISH -> {
+                ifViewAttached { view ->
+                    val locationPoints = runLocationServiceController.getLocationPoints()
+
+                    runLocationServiceController.stopLocationUpdates()
+                    runLocationServiceController.stopService()
+                    if (locationPoints != null && locationPoints.isNotEmpty()) {
+                        screenNavigator.pop()
+                        view.hideResumeStop()
+                        view.showBlockingView()
+
+                        view.clearMap()
+                        view.plotAllLines(locationPoints)
+                        view.normalizeCamera(locationPoints)
+                        view.takeMapSnapshot(locationPoints)
+                    } else {
+                        screenNavigator.popFromDialog()
+                    }
+                }
+            }
+            StopRunPromptDialog.Event.DISCARD_AND_EXIT -> {
+                runLocationServiceController.stopLocationUpdates()
+                runLocationServiceController.stopService()
+                screenNavigator.popFromDialog()
+            }
+        }
     }
 
     override fun onBackClicked() {
@@ -118,7 +158,7 @@ class RunPresenter(
                 screenNavigator.pop()
             }.build()
 
-        screenNavigator.showAlertDialog(dialog)
+        screenNavigator.showDialog(dialog)
     }
 
     override fun onStartPauseClicked() {
@@ -149,12 +189,33 @@ class RunPresenter(
     }
 
     override fun onStopClicked() {
-        runLocationServiceController.stopLocationUpdates()
-        runLocationServiceController.stopService()
-        screenNavigator.pop()
+        screenNavigator.showDialog(StopRunPromptDialog())
     }
 
-    override fun onLockClicked() {
+    override fun onMapSnapshot(bitmap: Bitmap) {
+        val locationPoints = runLocationServiceController.getLocationPoints()
+        val speeds = runLocationServiceController.getSpeeds()
+        val distance = runLocationServiceController.getDistance()
+        val duration = runLocationServiceController.getDurationInMillis()
+
+        if (locationPoints != null && speeds != null && distance != null && duration != null) {
+            disposables.add(
+                userService.getUser()
+                    .observeOn(Schedulers.io())
+                    .map { user ->
+                        val averageSpeed = speeds.average()
+                        calorieCalculator.calculateCaloriesBurned(
+                            user.weight.toFloat(),
+                            averageSpeed.toFloat(),
+                            duration * 0.000016667f) // convert millis into minutes ( * 1/60_000 )
+                    }
+                    .subscribe { calories ->
+                        // TODO: 13/03/21 save into database
+                    }
+            )
+        } else {
+            screenNavigator.pop()
+        }
     }
 
     override fun latestState(): State {
