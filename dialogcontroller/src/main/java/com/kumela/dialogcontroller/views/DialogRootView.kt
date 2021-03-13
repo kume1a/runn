@@ -1,4 +1,4 @@
-package com.kumela.dialogcontroller
+package com.kumela.dialogcontroller.views
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,6 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.AttrRes
 import androidx.core.math.MathUtils.clamp
+import com.kumela.dialogcontroller.DialogController
+import com.kumela.dialogcontroller.DialogRoot
+import com.kumela.dialogcontroller.R
 
 class DialogRootView @JvmOverloads constructor(
     context: Context,

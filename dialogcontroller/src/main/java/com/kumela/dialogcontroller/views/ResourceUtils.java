@@ -1,4 +1,4 @@
-package com.kumela.dialogcontroller;
+package com.kumela.dialogcontroller.views;
 
 
 import android.content.Context;
@@ -10,6 +10,8 @@ import android.util.TypedValue;
 import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
+
+import org.jetbrains.annotations.NotNull;
 
 class ResourceUtils {
     private ResourceUtils() {}
@@ -25,6 +27,7 @@ class ResourceUtils {
      *
      * @return a typed value suitable for temporary use
      */
+    @NotNull
     private static TypedValue obtainTempTypedValue() {
         TypedValue tmpValue = null;
         synchronized (tmpValueLock) {
@@ -62,7 +65,7 @@ class ResourceUtils {
      * @throws Resources.NotFoundException if can't resolve the given ID
      */
     private static void resolveAttribute(
-            Context context, int attrId, TypedValue value, boolean resolveRefs)
+            @NotNull Context context, int attrId, TypedValue value, boolean resolveRefs)
             throws Resources.NotFoundException {
         if (!context.getTheme().resolveAttribute(attrId, value, resolveRefs)) {
             throw new Resources.NotFoundException(

@@ -1,4 +1,4 @@
-package com.kumela.dialogcontroller
+package com.kumela.dialogcontroller.changehandlers
 
 import android.animation.Animator
 import android.animation.AnimatorSet

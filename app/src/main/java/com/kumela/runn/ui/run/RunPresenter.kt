@@ -1,6 +1,7 @@
 package com.kumela.runn.ui.run
 
 import android.content.pm.PackageManager
+import com.kumela.dialogcontroller.dialogs.AlertDialog
 import com.kumela.mvx.mvp.SavedStatePresenter
 import com.kumela.runn.core.events.LocationEvent
 import com.kumela.runn.core.events.RunSessionInfoEvent
@@ -43,9 +44,7 @@ class RunPresenter(
     override fun onViewBound() {
         super<SavedStatePresenter>.onViewBound()
         ifViewAttached { view ->
-            if (view.isLocationPermissionGranted()) {
-                view.showLocationPrompt()
-            } else {
+            if (!view.isLocationPermissionGranted()) {
                 if (view.shouldShowLocationPermissionRationale()) {
                     view.showPermissionRationale(RC_PERMISSION_LOCATION)
                 } else {
@@ -108,7 +107,18 @@ class RunPresenter(
     }
 
     override fun onBackClicked() {
+        val dialog = AlertDialog.Builder()
+            .title("Are you sure you want to exit?")
+            .message("If you exit, the progress will be lost and session will be cancelled")
+            .setOnPositiveButtonClickListener("YES") {
+                runLocationServiceController.stopLocationUpdates()
+                runLocationServiceController.stopService()
+                screenNavigator.popFromDialog()
+            }.setOnNegativeButtonClickListener("CANCEL") {
+                screenNavigator.pop()
+            }.build()
 
+        screenNavigator.showAlertDialog(dialog)
     }
 
     override fun onStartPauseClicked() {

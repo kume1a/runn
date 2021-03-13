@@ -1,4 +1,4 @@
-package com.kumela.dialogcontroller
+package com.kumela.dialogcontroller.views
 
 import android.content.Context
 import android.content.res.Configuration

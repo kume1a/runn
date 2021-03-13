@@ -13,6 +13,8 @@ import com.kumela.runn.core.base.BaseService
 import com.kumela.runn.core.events.LocationEvent
 import com.kumela.runn.core.events.RunSessionInfoEvent
 import com.kumela.runn.core.events.RunSessionTick
+import com.kumela.runn.core.roundToSingleDecimal
+import com.kumela.runn.core.toDuration
 import com.kumela.runn.data.managers.RequestingLocationManager
 import com.kumela.runn.helpers.SimpleTimer
 import com.kumela.runn.helpers.calculators.DistanceCalculator
@@ -44,7 +46,7 @@ class LocationUpdateService : BaseService() {
     private var distance: Double = 0.0
     private var lastTimestamp: Long = System.currentTimeMillis()
     private val speeds = mutableListOf<Double>()
-    private val timer = object: SimpleTimer() {
+    private val timer = object : SimpleTimer() {
         override fun onTick(duration: Duration) {
             EventBus.getDefault().post(RunSessionTick(duration))
         }
@@ -117,8 +119,11 @@ class LocationUpdateService : BaseService() {
         if (!changingConfigurations && requestingLocationManager.requestingLocationUpdates()) {
             startForeground(
                 AppNotificationManager.LOCATION_UPDATES_NOTIFICATION_ID,
-                appNotificationManager.getLocationNotification(this, location.toString(), "title")
-            )
+                appNotificationManager.getLocationNotification(
+                    this,
+                    getFormattedDuration(),
+                    getFormattedDistance()
+                ))
         }
 
         return true
@@ -175,7 +180,7 @@ class LocationUpdateService : BaseService() {
         lastTimestamp = System.currentTimeMillis()
 
         if (serviceIsRunningInForeground(this)) {
-            appNotificationManager.sendLocationNotification(this, location.toString(), "title")
+            appNotificationManager.sendLocationNotification(this, getFormattedDuration(), getFormattedDistance())
         }
     }
 
@@ -191,6 +196,9 @@ class LocationUpdateService : BaseService() {
         }
         return false
     }
+
+    private fun getFormattedDuration() = (timer.passedTime / 1000).toDuration().format()
+    private fun getFormattedDistance() = distance.roundToSingleDecimal().toString()
 
     inner class LocalBinder : Binder() {
         fun getService(): LocationUpdateService = this@LocationUpdateService

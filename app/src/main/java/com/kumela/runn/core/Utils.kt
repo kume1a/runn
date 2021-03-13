@@ -1,6 +1,8 @@
 package com.kumela.runn.core
 
 import android.view.View
+import com.kumela.runn.models.Duration
+import kotlin.math.floor
 
 fun Double.roundToSingleDecimal(): Double = String.format("%.1f", this).toDouble()
 fun Float.roundToSingleDecimal(): Float = String.format("%.1f", this).toFloat()
@@ -27,4 +29,15 @@ private fun fade(v: View, alpha: Float) {
         .alpha(alpha)
         .setDuration(400L)
         .start()
+}
+
+/**
+ * format long (duration in seconds) to [Duration] object
+ */
+fun Long.toDuration(): Duration {
+    val seconds: Int = (this % 3600 % 60).toInt()
+    val minutes: Int = floor((this % 3600 / 60).toDouble()).toInt()
+    val hours: Int = floor((this / 3600).toDouble()).toInt()
+
+    return Duration(seconds, minutes, hours)
 }

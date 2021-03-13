@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.annotation.StyleRes
 import androidx.appcompat.view.ContextThemeWrapper
 import com.bluelinelabs.conductor.Controller
+import com.kumela.dialogcontroller.views.DialogContentView
+import com.kumela.dialogcontroller.views.DialogRootView
 
 abstract class DialogController @JvmOverloads constructor(@StyleRes theme: Int = 0) : Controller(), DialogInterface {
 
