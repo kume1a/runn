@@ -26,6 +26,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
+            android:id="@+id/button_water_drop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/transparent"
@@ -271,7 +272,7 @@
             app:layout_constraintTop_toBottomOf="@id/card_steps" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_runs"
+            android:id="@+id/recycler_run_sessions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -279,7 +280,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_recent_activities"
             tools:itemCount="2"
-            tools:listitem="@layout/item_run" />
+            tools:listitem="@layout/item_run_session" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

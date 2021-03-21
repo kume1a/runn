@@ -120,12 +120,16 @@
             tools:text="00:22:32" />
 
         <ImageView
+            android:id="@+id/image_snapshot"
             android:layout_width="0dp"
             android:layout_height="140dp"
+            android:cropToPadding="true"
+            android:padding="5dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_calories"
-            android:layout_marginTop="32dp"
-            android:background="@color/primary" />
+            android:scaleType="centerCrop"
+            android:background="@drawable/bgr_image_snapshot"
+            android:layout_marginTop="16dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

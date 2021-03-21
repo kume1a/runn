@@ -36,6 +36,7 @@ interface RunContract {
         fun showBottomButtons()
         fun hideBottomButtons()
 
+        fun reconfigureMap()
         fun drawLine(a: LatLng, b: LatLng)
         fun moveCameraTo(position: LatLng, bearing: Float)
         fun takeMapSnapshot(locationPoints: List<LatLng>)

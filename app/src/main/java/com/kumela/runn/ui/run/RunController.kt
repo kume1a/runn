@@ -68,17 +68,7 @@ class RunController : BaseController<RunContract.View, RunContract.Presenter>(),
 
         mapView.getMapAsync { googleMap ->
             map = googleMap
-            try {
-                map!!.isMyLocationEnabled = true
-                map!!.uiSettings.isCompassEnabled = false
-                map!!.uiSettings.isRotateGesturesEnabled = false
-                map!!.setMaxZoomPreference(18f)
-                val buttonMyLocation = mapView.findViewById<ImageView>("2".toInt())
-                buttonMyLocation.setImageResource(R.drawable.ic_gps)
-                buttonMyLocation.setPadding(getDimension(R.dimen.padding_my_location).toInt())
-            } catch (e: SecurityException) {
-                Timber.e(e)
-            }
+            configureMap()
 
             try {
                 val success = googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(view.context, R.raw.map_style))
@@ -241,6 +231,10 @@ class RunController : BaseController<RunContract.View, RunContract.Presenter>(),
         cardContent.translate(cardTranslation)
     }
 
+    override fun reconfigureMap() {
+        configureMap()
+    }
+
     override fun drawLine(a: LatLng, b: LatLng) {
         map?.addPolyline(PolylineOptions().add(a).add(b).color(getColor(R.color.accent)))
     }
@@ -256,8 +250,11 @@ class RunController : BaseController<RunContract.View, RunContract.Presenter>(),
     }
 
     override fun takeMapSnapshot(locationPoints: List<LatLng>) {
-        @SuppressLint("MissingPermission")
-        map?.isMyLocationEnabled = false
+        try {
+            map?.isMyLocationEnabled = false
+        } catch (e: SecurityException) {
+            Timber.e(e, "accessing current location without permission")
+        }
         map?.snapshot { bitmap -> presenter.onMapSnapshot(bitmap) }
     }
 
@@ -278,6 +275,21 @@ class RunController : BaseController<RunContract.View, RunContract.Presenter>(),
 
     override fun clearMap() {
         map?.clear()
+    }
+
+    private fun configureMap() {
+        try {
+            val buttonMyLocation = mapView.findViewById<ImageView>("2".toInt())
+            buttonMyLocation.setImageResource(R.drawable.ic_gps)
+            buttonMyLocation.setPadding(getDimension(R.dimen.padding_my_location).toInt())
+
+            map!!.uiSettings.isCompassEnabled = false
+            map!!.uiSettings.isRotateGesturesEnabled = false
+            map!!.setMaxZoomPreference(18f)
+            map!!.isMyLocationEnabled = true
+        } catch (e: SecurityException) {
+            Timber.e(e)
+        }
     }
 
     companion object {

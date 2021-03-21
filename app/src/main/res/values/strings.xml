@@ -12,6 +12,9 @@
     <string name="cm">cm</string>
     <string name="cal">cal</string>
 
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+
     <string name="home">Home</string>
     <string name="plans">Plans</string>
     <string name="statistics">Statistics</string>
@@ -32,8 +35,10 @@
     <string name="calories">Calories</string>
     <string name="water">Water</string>
     <string name="steps">steps</string>
-    <string name="today">Today</string>
     <string name="recent_activities">Recent Activities</string>
+    <string name="value_cal">%.1f cal</string>
+    <string name="value_m">%.1f m</string>
+
     <string name="location_permission_rationale">Location permission is needed for core functionality.</string>
     <string name="location_permission_denied_explanation">Permission was denied, but is needed for core functionality.</string>
     <string name="pace_km_h">pace (km/h)</string>

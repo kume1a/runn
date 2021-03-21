@@ -9,5 +9,7 @@ data class User(
     var gender: Gender,
     var weight: Int,
     var height: Int,
-    @PrimaryKey var id: Int = 0
-)
+) {
+    @PrimaryKey(autoGenerate = true)
+    var id: Int? = null
+}

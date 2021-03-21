@@ -8,7 +8,6 @@ import android.location.Location
 import android.os.*
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
-import com.kumela.runn.BuildConfig
 import com.kumela.runn.core.base.BaseService
 import com.kumela.runn.core.events.LocationEvent
 import com.kumela.runn.core.events.RunSessionInfoEvent

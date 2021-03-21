@@ -2,6 +2,7 @@ package com.kumela.runn.data.db
 
 import android.app.Application
 import androidx.room.Room
+import com.kumela.runn.data.db.run.RunSessionDao
 import com.kumela.runn.data.db.user.UserDao
 import dagger.Module
 import dagger.Provides
@@ -22,4 +23,7 @@ object DatabaseModule {
 
     @Provides
     fun provideUserDao(appDatabase: AppDatabase): UserDao = appDatabase.userDao()
+
+    @Provides
+    fun provideRunSessionDao(appDatabase: AppDatabase): RunSessionDao = appDatabase.runSessionDao()
 }

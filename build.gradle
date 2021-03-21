@@ -44,10 +44,11 @@ ext {
     rxRelayVersion = '3.0.0'
 
     conductorVersion = '3.0.0'
+    conductorDialogVersion = '0.1.4'
 
     butterKnifeVersion = '10.2.3'
 
-    roomVersion = '2.3.0-beta02'
+    roomVersion = '2.3.0-beta03'
 
     timberVersion = '4.7.1'
 
@@ -57,6 +58,8 @@ ext {
     mapsVersion = '17.0.0'
 
     eventBusVersion = '3.2.0'
+
+    gsonVersion = '2.8.6'
 }
 
 task clean(type: Delete) {

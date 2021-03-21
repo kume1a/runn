@@ -21,6 +21,7 @@ abstract class BaseViewMvc(
     protected fun <T : View?> findViewById(@IdRes id: Int): T = rootView.findViewById<T>(id)
 
     protected fun getString(@StringRes id: Int): String = context.getString(id)
+    protected fun getString(@StringRes id: Int, vararg formatArgs: Any): String = context.getString(id, *formatArgs)
 
     protected fun getStringArray(@ArrayRes id: Int): Array<String> = context.resources.getStringArray(id)
 

@@ -1,6 +1,7 @@
 package com.kumela.runn.ui.run
 
 import com.kumela.runn.core.lifecycle.ScreenLifecycleTask
+import com.kumela.runn.data.db.run.RunSessionService
 import com.kumela.runn.data.db.user.UserService
 import com.kumela.runn.di.annotations.ScreenScope
 import com.kumela.runn.helpers.calculators.BurnedCalorieCalculator
@@ -27,11 +28,14 @@ abstract class RunModule {
             burnedCalorieCalculator: BurnedCalorieCalculator,
             screenNavigator: ScreenNavigator,
             userService: UserService,
+            runSessionService: RunSessionService,
         ): RunContract.Presenter =
             RunPresenter(
                 runLocationServiceController,
                 burnedCalorieCalculator,
                 screenNavigator,
-                userService)
+                userService,
+                runSessionService
+            )
     }
 }

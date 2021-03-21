@@ -7,22 +7,25 @@ import com.kumela.runn.core.events.LocationEvent
 import com.kumela.runn.core.events.RunSessionInfoEvent
 import com.kumela.runn.core.events.RunSessionTick
 import com.kumela.runn.core.roundToSingleDecimal
+import com.kumela.runn.data.db.run.RunSession
+import com.kumela.runn.data.db.run.RunSessionService
 import com.kumela.runn.data.db.user.UserService
 import com.kumela.runn.helpers.calculators.BurnedCalorieCalculator
 import com.kumela.runn.ui.core.navigation.ScreenNavigator
 import com.kumela.runn.ui.dialogs.StopRunPromptDialog
 import com.kumela.runn.ui.dialogs.core.AlertDialog
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import timber.log.Timber
 
 class RunPresenter(
     private val runLocationServiceController: RunLocationServiceController,
     private val calorieCalculator: BurnedCalorieCalculator,
     private val screenNavigator: ScreenNavigator,
     private val userService: UserService,
+    private val runSessionService: RunSessionService,
 ) : SavedStatePresenter<RunContract.View, RunPresenter.State>(State()), RunContract.Presenter {
 
     data class State(
@@ -61,6 +64,7 @@ class RunPresenter(
         super.onRequestPermissionResult(requestCode, permissions, grantResults)
         if (requestCode == RC_PERMISSION_LOCATION) {
             if (grantResults.getOrNull(0) == PackageManager.PERMISSION_GRANTED) {
+                view?.reconfigureMap()
                 if (view?.isLocationEnabled() == false) {
                     view?.showLocationPrompt()
                 }
@@ -201,7 +205,6 @@ class RunPresenter(
         if (locationPoints != null && speeds != null && distance != null && duration != null) {
             disposables.add(
                 userService.getUser()
-                    .observeOn(Schedulers.io())
                     .map { user ->
                         val averageSpeed = speeds.average()
                         calorieCalculator.calculateCaloriesBurned(
@@ -209,9 +212,27 @@ class RunPresenter(
                             averageSpeed.toFloat(),
                             duration * 0.000016667f) // convert millis into minutes ( * 1/60_000 )
                     }
-                    .subscribe { calories ->
-                        // TODO: 13/03/21 save into database
+                    .flatMapCompletable { calories ->
+                        val runSession = RunSession(
+                            System.currentTimeMillis(),
+                            calories,
+                            distance,
+                            duration,
+                            speeds.average(),
+                            speeds,
+                            locationPoints,
+                            bitmap)
+                        runSessionService.createRunSession(runSession)
                     }
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            screenNavigator.pop()
+                        },
+                        { throwable ->
+                            Timber.e(throwable)
+                        }
+                    )
             )
         } else {
             screenNavigator.pop()
