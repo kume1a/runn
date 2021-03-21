@@ -30,11 +30,11 @@
     <string name="onboarding_height_header">How tall are you?</string>
 
     <string name="target">Target</string>
+    <string name="value_percent">%.1f%%</string>
     <string name="week">week</string>
-    <string name="steps_capitalized">Steps</string>
+    <string name="distance_capitalized">Distance</string>
     <string name="calories">Calories</string>
     <string name="water">Water</string>
-    <string name="steps">steps</string>
     <string name="recent_activities">Recent Activities</string>
     <string name="value_cal">%.1f cal</string>
     <string name="value_m">%.1f m</string>

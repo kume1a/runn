@@ -15,7 +15,7 @@
         android:paddingEnd="12dp">
 
         <TextView
-            android:id="@+id/text_weekly_activity"
+            android:id="@+id/text_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_bold"
@@ -45,7 +45,7 @@
             android:text="@string/target"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_weekly_activity" />
+            app:layout_constraintTop_toBottomOf="@id/text_header" />
 
         <TextView
             android:id="@+id/text_week"
@@ -111,25 +111,25 @@
                     app:layout_constraintTop_toBottomOf="@id/text_target" />
 
                 <TextView
-                    android:id="@+id/text_steps"
+                    android:id="@+id/text_distance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@string/steps_capitalized"
+                    android:text="@string/distance_capitalized"
                     android:textColor="@color/text_secondary"
                     app:layout_constraintBottom_toBottomOf="@id/view_round_steps"
                     app:layout_constraintStart_toEndOf="@id/view_round_steps"
                     app:layout_constraintTop_toTopOf="@id/view_round_steps" />
 
                 <TextView
-                    android:id="@+id/text_steps_percentage"
+                    android:id="@+id/text_distance_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
                     android:textSize="16sp"
-                    app:layout_constraintBaseline_toBaselineOf="@id/text_steps"
+                    app:layout_constraintBaseline_toBaselineOf="@id/text_distance"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/text_steps"
+                    app:layout_constraintStart_toEndOf="@id/text_distance"
                     tools:text="82%" />
 
                 <View
@@ -149,7 +149,7 @@
                     android:text="@string/calories"
                     android:textColor="@color/text_secondary"
                     app:layout_constraintBottom_toBottomOf="@id/view_round_calories"
-                    app:layout_constraintStart_toStartOf="@id/text_steps"
+                    app:layout_constraintStart_toStartOf="@id/text_distance"
                     app:layout_constraintTop_toTopOf="@id/view_round_calories" />
 
                 <TextView
@@ -159,7 +159,7 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:textSize="16sp"
                     app:layout_constraintBaseline_toBaselineOf="@id/text_calories"
-                    app:layout_constraintEnd_toEndOf="@id/text_steps_percentage"
+                    app:layout_constraintEnd_toEndOf="@id/text_distance_percentage"
                     tools:text="92%" />
 
                 <View
@@ -214,25 +214,25 @@
                 android:paddingBottom="16dp">
 
                 <TextView
-                    android:id="@+id/text_steps_count"
+                    android:id="@+id/text_distance_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="32sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="11 500" />
+                    tools:text="2.5" />
 
                 <TextView
-                    android:id="@+id/text_steps_count_steps"
+                    android:id="@+id/text_distance_amount_km"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@string/steps"
+                    android:text="@string/km"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintBaseline_toBaselineOf="@id/text_steps_count"
-                    app:layout_constraintStart_toEndOf="@id/text_steps_count" />
+                    app:layout_constraintBaseline_toBaselineOf="@id/text_distance_amount"
+                    app:layout_constraintStart_toEndOf="@id/text_distance_amount" />
 
                 <TextView
                     android:id="@+id/text_today"
@@ -242,11 +242,11 @@
                     android:textColor="@color/text_secondary"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@id/text_steps_count"
-                    app:layout_constraintTop_toBottomOf="@id/text_steps_count" />
+                    app:layout_constraintStart_toStartOf="@id/text_distance_amount"
+                    app:layout_constraintTop_toBottomOf="@id/text_distance_amount" />
 
                 <com.kumela.views.charts.bar.BarChart
-                    android:id="@+id/chart_steps"
+                    android:id="@+id/chart_distances"
                     android:layout_width="0dp"
                     app:fontFamily="@font/montserrat"
                     android:layout_height="180dp"

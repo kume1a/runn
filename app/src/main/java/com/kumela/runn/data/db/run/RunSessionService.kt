@@ -2,6 +2,7 @@ package com.kumela.runn.data.db.run
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -21,6 +22,11 @@ class RunSessionService @Inject constructor(private val runSessionDao: RunSessio
 
     fun getAllRunSessions(limit: Int = Int.MAX_VALUE): Observable<List<RunSession>> {
         return runSessionDao.getAllRunSessions(limit)
+            .subscribeOn(Schedulers.io())
+    }
+
+    fun getRunSessionsAfter(timestamp: Long): Observable<List<RunSession>> {
+        return runSessionDao.getRunSessionsAfter(timestamp)
             .subscribeOn(Schedulers.io())
     }
 }

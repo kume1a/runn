@@ -13,12 +13,11 @@ import com.kumela.runn.core.events.LocationEvent
 import com.kumela.runn.core.events.RunSessionInfoEvent
 import com.kumela.runn.core.events.RunSessionTick
 import com.kumela.runn.core.roundToSingleDecimal
-import com.kumela.runn.core.toDuration
 import com.kumela.runn.data.managers.RequestingLocationManager
 import com.kumela.runn.helpers.SimpleTimer
 import com.kumela.runn.helpers.calculators.DistanceCalculator
 import com.kumela.runn.helpers.calculators.SpeedCalculator
-import com.kumela.runn.models.Duration
+import com.kumela.runn.helpers.time.Duration
 import com.kumela.runn.notifications.AppNotificationManager
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
@@ -200,7 +199,7 @@ class LocationUpdateService : BaseService() {
         return false
     }
 
-    private fun getFormattedDuration() = (timer.passedTime / 1000).toDuration().format()
+    private fun getFormattedDuration() = Duration(milliseconds = timer.passedTime).toSMH()
     private fun getFormattedDistance() = distance.roundToSingleDecimal().toString()
 
     inner class LocalBinder : Binder() {

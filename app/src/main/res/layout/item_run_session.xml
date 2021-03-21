@@ -83,14 +83,13 @@
             android:id="@+id/text_calories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="18dp"
             android:textColor="@color/text_secondary"
             android:textSize="16sp"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintEnd_toStartOf="@id/text_distance_in_metres"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/text_distance_in_metres"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="@+id/text_distance_amount"
             app:layout_constraintTop_toBottomOf="@id/text_distance_amount"
             tools:text="300 cal" />
 
@@ -112,11 +111,10 @@
             android:layout_height="wrap_content"
             android:textColor="@color/text_secondary"
             android:textSize="16sp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintStart_toEndOf="@id/text_distance_in_metres"
-            app:layout_constraintBaseline_toBaselineOf="@id/text_distance_in_metres"
-            app:layout_constraintEnd_toEndOf="parent"
             android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_distance_in_metres"
+            app:layout_constraintEnd_toEndOf="@+id/text_kmh"
+            app:layout_constraintStart_toEndOf="@id/text_distance_in_metres"
             tools:text="00:22:32" />
 
         <ImageView

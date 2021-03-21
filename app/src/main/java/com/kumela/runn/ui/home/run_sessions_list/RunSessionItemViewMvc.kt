@@ -9,6 +9,7 @@ import com.kumela.mvx.mvc.BaseObservableViewMvc
 import com.kumela.runn.R
 import com.kumela.runn.core.roundToSingleDecimal
 import com.kumela.runn.data.db.run.RunSession
+import com.kumela.runn.helpers.time.Duration
 
 class RunSessionItemViewMvc(
     inflater: LayoutInflater,
@@ -44,7 +45,7 @@ class RunSessionItemViewMvc(
         textSpeedAmount.text = runSession.averageSpeed.roundToSingleDecimal().toString()
         textCalories.text = getString(R.string.value_cal, runSession.caloriesBurned)
         textDistanceInMeters.text = getString(R.string.value_m, (runSession.distanceInKm * 1000f).toFloat())
-        textTimeAmount.text = (runSession.durationInMillis / 1000).toString()
+        textTimeAmount.text = Duration(milliseconds = runSession.durationInMillis).toSMH()
         imageSnapshot.setImageBitmap(runSession.mapSnapshot)
     }
 }

@@ -16,6 +16,9 @@ interface RunSessionDao {
     @Delete
     fun deleteRunSession(runSession: RunSession): Completable
 
-    @Query("SELECT * FROM run_sessions LIMIT :limit")
+    @Query("SELECT * FROM run_sessions ORDER BY timestamp DESC LIMIT :limit")
     fun getAllRunSessions(limit: Int): Observable<List<RunSession>>
+
+    @Query("SELECT * FROM run_sessions WHERE timestamp > :timestamp ORDER BY timestamp DESC")
+    fun getRunSessionsAfter(timestamp: Long): Observable<List<RunSession>>
 }

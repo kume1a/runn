@@ -5,6 +5,7 @@ import com.kumela.runn.data.db.run.RunSession
 import com.kumela.runn.data.db.run.RunSessionService
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import timber.log.Timber
+import java.util.*
 
 class HomePresenter(
     private val runSessionService: RunSessionService,
@@ -19,9 +20,70 @@ class HomePresenter(
                 }
             }
         )
+
+        val targetDistance = 10
+        val targetCalories = 2000
+        disposables.add(runSessionService.getRunSessionsAfter(getTimestampOfThisWeek())
+            .map { runSessions ->
+                val totalDistance = runSessions.sumByDouble { it.distanceInKm }
+                val totalCalories = runSessions.sumBy { it.caloriesBurned.toInt() }
+
+                val distanceProgress = totalDistance / targetDistance
+                val caloriesProgress = totalCalories / targetCalories
+
+                Pair(distanceProgress, caloriesProgress)
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { pair ->
+                ifViewAttached { view ->
+                    view.bindDistanceProgress(pair.first.toFloat())
+                    view.bindCaloriesProgress(pair.second.toFloat())
+                }
+            })
+
+        disposables.add(runSessionService.getRunSessionsAfter(getTimestampOfToday())
+            .map { runSessions ->
+                runSessions.sumByDouble { it.distanceInKm }
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { totalDistanceCoveredToday ->
+                ifViewAttached { view ->
+                    view.bindDistanceCoveredToday(totalDistanceCoveredToday)
+                }
+            })
+
+        disposables.add(runSessionService.getAllRunSessions()
+            .map { runSessions ->
+                runSessions.map { it.distanceInKm * 1000f }
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { distances ->
+                ifViewAttached { view ->
+                    if (distances.isNotEmpty()) {
+                        view.bindDistances(distances)
+                    }
+                }
+            })
     }
 
     override fun onRunSessionClicked(runSession: RunSession) {
         Timber.d("onRunSessionClicked() called with: runSession = $runSession")
+    }
+
+    private fun getTimestampOfThisWeek(): Long {
+        val cal = Calendar.getInstance()
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+        cal.set(Calendar.HOUR_OF_DAY, 0)
+        cal.set(Calendar.MINUTE, 0)
+        cal.set(Calendar.SECOND, 0)
+        return cal.timeInMillis
+    }
+
+    private fun getTimestampOfToday(): Long {
+        val cal = Calendar.getInstance()
+        cal.set(Calendar.HOUR_OF_DAY, 0)
+        cal.set(Calendar.MINUTE, 0)
+        cal.set(Calendar.SECOND, 0)
+        return cal.timeInMillis
     }
 }

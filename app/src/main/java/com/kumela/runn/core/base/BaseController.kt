@@ -114,7 +114,11 @@ abstract class BaseController<V : MvpView, P : MvpPresenter<V>> : MvpBaseControl
         }
     }
 
-    protected fun getString(@StringRes stringRes: Int): String = context?.getString(stringRes) ?: ""
+    protected fun getString(@StringRes stringRes: Int): String =
+        context?.getString(stringRes) ?: ""
+
+    protected fun getString(@StringRes stringRes: Int, vararg formatArgs: Any): String =
+        context?.getString(stringRes, *formatArgs) ?: ""
 
     @Dimension
     protected fun getDimension(@DimenRes dimenRes: Int): Float = context?.resources?.getDimension(dimenRes) ?: 0f

@@ -115,7 +115,7 @@ class RunPresenter(
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onRunSessionTick(event: RunSessionTick) {
-        view?.setTime(event.duration.format())
+        view?.setTime(event.duration.toSMH())
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
