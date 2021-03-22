@@ -1,4 +1,4 @@
-package com.kumela.views.charts
+package com.kumela.views
 
 import android.animation.ValueAnimator
 import android.content.Context
@@ -10,7 +10,6 @@ import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
 import androidx.annotation.FloatRange
 import androidx.core.content.ContextCompat
-import com.kumela.views.R
 import com.kumela.views.core.BaseView
 import com.kumela.views.core.ViewUtils
 import com.kumela.views.enums.Ring

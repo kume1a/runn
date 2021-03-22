@@ -23,10 +23,4 @@
 
     <dimen name="onboarding_indicator_default_width">60dp</dimen>
     <dimen name="onboarding_indicator_default_height">10dp</dimen>
-
-    <dimen name="bar_chart_default_width">360dp</dimen>
-    <dimen name="bar_chart_default_height">180dp</dimen>
-    <dimen name="bar_chart_default_text_size">16sp</dimen>
-    <dimen name="bar_chart_default_background_line_height">.4dp</dimen>
-    <dimen name="bar_chart_default_text_margin">22dp</dimen>
 </resources>

@@ -3,6 +3,7 @@ package com.kumela.runn.ui.home
 import com.kumela.mvx.mvp.MvpBasePresenter
 import com.kumela.runn.data.db.run.RunSession
 import com.kumela.runn.data.db.run.RunSessionService
+import com.kumela.runn.helpers.time.Duration
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 import java.util.*
@@ -36,6 +37,7 @@ class HomePresenter(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { pair ->
                 ifViewAttached { view ->
+                    Timber.d("onViewBound() called with: view = $view")
                     view.bindDistanceProgress(pair.first.toFloat())
                     view.bindCaloriesProgress(pair.second.toFloat())
                 }
@@ -54,13 +56,17 @@ class HomePresenter(
 
         disposables.add(runSessionService.getAllRunSessions()
             .map { runSessions ->
-                runSessions.map { it.distanceInKm * 1000f }
+                runSessions.groupBy { runSession ->
+                    runSession.timestamp / Duration.millisecondsPerDay
+                }.mapValues { entry ->
+                    entry.value.sumByDouble { it.distanceInKm } * 1000
+                }
             }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { distances ->
+            .subscribe { julianDaysToDistancesInMeters ->
                 ifViewAttached { view ->
-                    if (distances.isNotEmpty()) {
-                        view.bindDistances(distances)
+                    if (julianDaysToDistancesInMeters.isNotEmpty()) {
+                        view.bindDistances(julianDaysToDistancesInMeters)
                     }
                 }
             })

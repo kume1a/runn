@@ -87,7 +87,7 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$timberVersion"
 
     // charts
-//    implementation "com.github.PhilJay:MPAndroidChart:$chartsVersion"
+    implementation "com.github.PhilJay:MPAndroidChart:$chartsVersion"
 
     implementation "com.google.android.gms:play-services-location:$locationVersion"
     implementation "com.google.android.gms:play-services-maps:$mapsVersion"

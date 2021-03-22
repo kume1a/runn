@@ -18,9 +18,4 @@
 
     <color name="onboarding_indicator_default_inactive_color">#222228</color>
     <color name="onboarding_indicator_default_active_color">#D7D7D8</color>
-    
-    <color name="bar_chart_default_text_color">#848488</color>
-    <color name="bar_chart_default_inactive_bar_color">#848488</color>
-    <color name="bar_chart_default_active_bar_color">#18ffff</color>
-    <color name="bar_chart_default_background_line_color">#848488</color>
 </resources>

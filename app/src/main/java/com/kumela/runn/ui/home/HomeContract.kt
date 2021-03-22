@@ -13,7 +13,7 @@ interface HomeContract {
         fun bindWaterProgress(@FloatRange(from = 0.0, to = 1.0) progress: Float)
 
         fun bindDistanceCoveredToday(distance: Double)
-        fun bindDistances(distances: List<Double>)
+        fun bindDistances(julianDaysToDistancesInMeters: Map<Long, Double>)
 
         fun bindRunSessions(runSessions: List<RunSession>)
     }

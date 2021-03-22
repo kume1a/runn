@@ -124,8 +124,8 @@ abstract class BaseController<V : MvpView, P : MvpPresenter<V>> : MvpBaseControl
     protected fun getDimension(@DimenRes dimenRes: Int): Float = context?.resources?.getDimension(dimenRes) ?: 0f
 
     @ColorInt
-    protected fun getColor(@ColorRes coloreRes: Int): Int =
-        if (context != null) ContextCompat.getColor(context!!, coloreRes) else 0
+    protected fun getColor(@ColorRes colorRes: Int): Int =
+        if (context != null) ContextCompat.getColor(context!!, colorRes) else 0
 
     protected fun getDrawable(@DrawableRes drawableRes: Int): Drawable? =
         if (context != null) ContextCompat.getDrawable(context!!, drawableRes) else null

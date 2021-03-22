@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.kumela.views.charts.TriplePieChart
+                <com.kumela.views.TriplePieChart
                     android:id="@+id/chart_target"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -245,12 +245,10 @@
                     app:layout_constraintStart_toStartOf="@id/text_distance_amount"
                     app:layout_constraintTop_toBottomOf="@id/text_distance_amount" />
 
-                <com.kumela.views.charts.bar.BarChart
+                <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/chart_distances"
                     android:layout_width="0dp"
-                    app:fontFamily="@font/montserrat"
                     android:layout_height="180dp"
-                    android:textColor="@color/text_secondary"
                     android:layout_marginTop="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
